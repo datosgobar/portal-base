@@ -1,0 +1,7 @@
+site_name: Portal Andino
+pages:
+  - Home: 'index.md'
+  - Images:
+    - 'Portal base': 'images/portal_base.md'
+    - nginx: 'imagenes/nginx.md'
+    - solr: 'imagene/solr.md'
