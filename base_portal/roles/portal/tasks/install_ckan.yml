@@ -6,9 +6,9 @@
 #    url: http://packaging.ckan.org/python-ckan_2.5-trusty_amd64.deb
 #    dest: /tmp
 
-- name: Download ckan deb from github
+- name: Download ckan deb from Azure
   get_url:
-    url: https://github.com/datosgobar/portal-base/blob/master/vendor/ckan_2.5.3-trusty_amd64.deb?raw=true
+    url: https://modernizacion.blob.core.windows.net/debs/ckan_2.5.3-trusty_amd64.deb
     dest: /tmp/python-ckan_2.5-trusty_amd64.deb
 
 - name: Setup dirs
