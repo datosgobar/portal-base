@@ -1,0 +1,6 @@
+#!/bin/sh
+set -e;
+
+CONFIG="{{ CKAN_CONFIG }}/{{ CKAN_CONFIG_FILE }}"
+
+{{ CKAN_HOME }}/bin/paster $@ -c "$CONFIG"

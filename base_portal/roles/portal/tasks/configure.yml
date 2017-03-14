@@ -31,6 +31,9 @@
     - {src: scripts/config/add_admin.sh.j2, dest: "{{ CKAN_INIT }}/add_admin.sh"}
     - {src: scripts/config/change_datapusher_url.sh.j2, dest: "{{ CKAN_INIT }}/change_datapusher_url.sh"}
     - {src: scripts/config/change_site_url.sh.j2, dest: "{{ CKAN_INIT }}/change_site_url.sh"}
+    - {src: scripts/config/init.sh, dest: "{{ CKAN_INIT }}/init.sh"}
+    - {src: scripts/config/paster.sh.j2, dest: "{{ CKAN_INIT }}/paster.sh"}
+    - {src: scripts/config/update_conf.sh.j2, dest: "{{ CKAN_INIT }}/update_conf.sh"}
 
 - name: Add run scripts
   template:
