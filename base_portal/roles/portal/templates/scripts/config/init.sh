@@ -51,6 +51,10 @@ export PGHOST=db
 export PGPORT=5432
 export PGDATABASE=ckan
 export DATASTORE_DB=datastore_default
+export PGUSER="$database_user"
+export PGPASSWORD="$database_password"
+psql -c "CREATE ROLE $datastore_user WITH PASSWORD '$datastore_password';"
+psql -c "CREATE DATABASE $DATASTORE_DB OWNER $database_user;"
 
 "$current_dir/change_datapusher_url.sh" "http://$datapusher_host:8800"
 "$current_dir/update_conf.sh" "error_email_from=$error_email"
@@ -61,9 +65,5 @@ export DATASTORE_DB=datastore_default
 # Create datastore role and database
 
 "$current_dir/paster.sh" --plugin=ckan db init
-export PGUSER="$database_user"
-export PGPASSWORD="$database_password"
-psql -c "CREATE ROLE $datastore_user WITH PASSWORD '$datastore_password';"
-psql -c "CREATE DATABASE $DATASTORE_DB OWNER $database_user;"
 "$current_dir/paster.sh" --plugin=ckan datastore set-permissions| psql --set ON_ERROR_STOP=1
 "$current_dir/paster.sh" --plugin=ckanext-harvest harvester initdb
