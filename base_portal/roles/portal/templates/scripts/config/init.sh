@@ -2,22 +2,18 @@
 current_dir="$(dirname "$0")"
 usage() {
 	echo "Usage: `basename $0`" >&2
-	echo "(-u datapusher_host)" >&2
 	echo "(-e error_email_from)" >&2
 	echo "(-h site_host or ip)" >&2
 	echo "(-p database_user) (-P database_password)" >&2
 	echo "(-d datastore_user) (-D datastore_password)" >&2
 }
-if ( ! getopts "u:e:h:p:P:d:D:" opt); then
+if ( ! getopts "e:h:p:P:d:D:" opt); then
     usage;
 	exit $E_OPTERROR;
 fi
 
-while getopts "u:e:h:p:P:d:D:" opt;do
+while getopts "e:h:p:P:d:D:" opt;do
 	case "$opt" in
-	u)
-	  datapusher_host="$OPTARG"
-      ;;
 	e)
 	  error_email="$OPTARG"
       ;;
@@ -53,6 +49,7 @@ export PGDATABASE=ckan
 export DATASTORE_DB=datastore_default
 export PGUSER="$database_user"
 export PGPASSWORD="$database_password"
+datapusher_host=$(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
 psql -c "CREATE ROLE $datastore_user WITH PASSWORD '$datastore_password';"
 psql -c "CREATE DATABASE $DATASTORE_DB OWNER $database_user;"
 
