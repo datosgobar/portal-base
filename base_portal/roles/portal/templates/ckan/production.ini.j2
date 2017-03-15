@@ -27,8 +27,10 @@ full_stack = true
 cache_dir = /tmp/%(ckan.site_id)s/
 beaker.session.key = ckan
 superThemeTaxonomy = http://datos.gob.ar/superThemeTaxonomy.json
-ckan.owner = 
-ckan.owner.email = 
+ckan.site.title =
+ckan.site.description =
+ckan.owner =
+ckan.owner.email =
 
 
 
@@ -51,6 +53,7 @@ who.log_file = %(cache_dir)s/who_log.ini
 
 ## Database Settings
 sqlalchemy.url =
+
 ckan.datastore.write_url =
 ckan.datastore.read_url =
 
@@ -81,6 +84,8 @@ ckan.auth.roles_that_cascade_to_sub_groups = admin
 
 ckan.site_id = default
 solr_url = http://{{ DEFAULT_SOLR_IP }}:{{ DEFAULT_SOLR_PORT }}/solr/ckan
+ckan.search.automatic_indexing = true
+ckan.search.solr_commit = true
 
 #ckan.simple_search = 1
 
@@ -108,7 +113,7 @@ ckan.views.default_views = image_view text_view recline_view
 
 
 ## Front-End Settings
-ckan.site_title = CKAN
+ckan.site_title =
 ckan.site_logo = /base/images/ckan-logo.png
 ckan.site_description =
 ckan.favicon = /images/icons/ckan.ico
@@ -171,7 +176,7 @@ ckan.hide_activity_from_users = %(ckan.site_id)s
 ## Email settings
 
 # Well actually postfix is now available at host: {{ DEFAULT_EMAIL_HOST }}
-email_to = disabled@example.com
+email_to =
 error_email_from =
 smtp.server = {{ DEFAULT_EMAIL_HOST }}
 #smtp.starttls = False
