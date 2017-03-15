@@ -26,7 +26,6 @@ Dado un script llamado `init.sh`, puede ser ejecutado de la forma:
 Para inicializar las bases de datos, se debe usar el script `init.sh`. El mismo espera los siguientes parametros:
 
     Usage: init.sh
-    (-u datapusher_host)
     (-e error_email_from)
     (-h site_host or ip)
     (-p database_user) (-p database_password)
@@ -35,7 +34,6 @@ Para inicializar las bases de datos, se debe usar el script `init.sh`. El mismo 
 Un ejemplo de su uso:
 
     docker exec -it andino /etc/ckan_init.d/init.sh \
-        -u 172.19.0.6 \
         -e admin@example.com \
         -h midominio.com \
         -p usuario_db \
