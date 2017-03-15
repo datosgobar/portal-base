@@ -5,7 +5,7 @@ usage() {
 	echo "(-u datapusher_host)" >&2
 	echo "(-e error_email_from)" >&2
 	echo "(-h site_host or ip)" >&2
-	echo "(-p database_user) (-p database_password)" >&2
+	echo "(-p database_user) (-P database_password)" >&2
 	echo "(-d datastore_user) (-D datastore_password)" >&2
 }
 if ( ! getopts "u:e:h:p:P:d:D:" opt); then
