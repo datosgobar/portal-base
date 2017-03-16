@@ -50,6 +50,7 @@ export DATASTORE_DB=datastore_default
 export PGUSER="$database_user"
 export PGPASSWORD="$database_password"
 datapusher_host=$(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
+beaker_session_secret=$(openssl rand -base64 25)
 psql -c "CREATE ROLE $datastore_user WITH PASSWORD '$datastore_password';"
 psql -c "CREATE DATABASE $DATASTORE_DB OWNER $database_user;"
 
@@ -59,6 +60,7 @@ psql -c "CREATE DATABASE $DATASTORE_DB OWNER $database_user;"
 "$current_dir/update_conf.sh" "sqlalchemy.url=postgresql://$database_user:$database_password@$PGHOST:$PGPORT/$PGDATABASE"
 "$current_dir/update_conf.sh" "ckan.datastore.write_url=postgresql://$database_user:$database_password@$PGHOST:$PGPORT/$DATASTORE_DB"
 "$current_dir/update_conf.sh" "ckan.datastore.read_url=postgresql://$datastore_user:$datastore_password@$PGHOST:$PGPORT/$DATASTORE_DB"
+"$current_dir/update_conf.sh" "beaker.session.secret=$beaker_session_secret"
 # Create datastore role and database
 
 "$current_dir/paster.sh" --plugin=ckan db init
