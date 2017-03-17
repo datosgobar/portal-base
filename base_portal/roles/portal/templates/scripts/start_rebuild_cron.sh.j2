@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e;
+
+touch crontab.tmp
+# 2:30 AM!
+echo '30 2 * * * {{ CKAN_INIT }}/sync_update_search_and_tracking.sh' > crontab.tmp
+crontab crontab.tmp
+rm -rf crontab.tmp
+touch .cron_init
+
+exec /usr/sbin/cron -f
