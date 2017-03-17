@@ -38,19 +38,21 @@
 
 - name: Add run scripts
   template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
+    src: "scripts/{{ item.src }}"
+    dest: "{{ CKAN_INIT }}/{{ item.dest }}"
   with_items:
-    - {src: scripts/start_ckan.sh.j2, dest: "{{ CKAN_INIT }}/start_ckan.sh"}
-    - {src: scripts/run_andino.sh, dest: "{{ CKAN_INIT }}/run_andino.sh"}
-    - {src: scripts/run_gather_consumer.sh.j2, dest: "{{ CKAN_INIT }}/run_gather_consumer.sh"}
-    - {src: scripts/run_fetch_consumer.sh.j2, dest: "{{ CKAN_INIT }}/run_fetch_consumer.sh"}
-    - {src: scripts/run_harvest.sh.j2, dest: "{{ CKAN_INIT }}/run_harvest.sh"}
-    - {src: scripts/start_cron.sh.j2, dest: "{{ CKAN_INIT }}/start_cron.sh"}
-    - {src: scripts/run_clean_harvest.sh.j2, dest: "{{ CKAN_INIT }}/run_clean_harvest.sh"}
-    - {src: scripts/run_tests.sh.j2, dest: "{{ CKAN_INIT }}/run_tests.sh"}
-    - {src: scripts/run_rebuild_search.sh.j2, dest: "{{ CKAN_INIT }}/run_rebuild_search.sh"}
-    - {src: scripts/run_update_tracking.sh.j2, dest: "{{ CKAN_INIT }}/run_update_tracking.sh"}
+    - {src: start_ckan.sh.j2, dest: start_ckan.sh}
+    - {src: run_andino.sh, dest: run_andino.sh}
+    - {src: run_gather_consumer.sh.j2, dest: run_gather_consumer.sh}
+    - {src: run_fetch_consumer.sh.j2, dest: run_fetch_consumer.sh}
+    - {src: run_harvest.sh.j2, dest: run_harvest.sh}
+    - {src: start_cron.sh.j2, dest: start_cron.sh}
+    - {src: run_clean_harvest.sh.j2, dest: run_clean_harvest.sh}
+    - {src: run_tests.sh.j2, dest: run_tests.sh}
+    - {src: run_rebuild_search.sh.j2, dest: run_rebuild_search.sh}
+    - {src: run_update_tracking.sh.j2, dest: run_update_tracking.sh}
+    - {src: start_rebuild_cron.sh.j2, dest: start_rebuild_cron.sh}
+    - {src: sync_rebuild_tasks.sh.j2, dest: sync_rebuild_tasks.sh}
 
 
 - name: Copy default ckan config
