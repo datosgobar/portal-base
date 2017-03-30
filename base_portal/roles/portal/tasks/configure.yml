@@ -26,7 +26,6 @@
     dest: "{{ item.dest }}"
   with_items:
     - {src: scripts/config/init_db.sh.j2, dest: "{{ CKAN_INIT }}/init_db.sh"}
-    - {src: scripts/config/make_test_conf.sh.j2, dest: "{{ CKAN_INIT }}/make_test_conf.sh"}
     - {src: scripts/config/make_conf.sh.j2, dest: "{{ CKAN_INIT }}/make_conf.sh"}
     - {src: scripts/config/add_admin.sh.j2, dest: "{{ CKAN_INIT }}/add_admin.sh"}
     - {src: scripts/config/change_datapusher_url.sh.j2, dest: "{{ CKAN_INIT }}/change_datapusher_url.sh"}
