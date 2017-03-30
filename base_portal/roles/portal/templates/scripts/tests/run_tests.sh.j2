@@ -3,3 +3,8 @@
 cd {{ CKAN_HOME }}/src/ckan
 source ../../bin/activate
 nosetests --ckan --reset-db --with-pylons=test-core.ini --nologcapture --with-coverage --cover-package=ckan --cover-package=ckanext ckan ckanext
+
+solr4pid=$(ps | grep java | awk '{print $1}')
+if [ -n "$solr4pid" ]; then
+    kill $solr4pid
+fi
