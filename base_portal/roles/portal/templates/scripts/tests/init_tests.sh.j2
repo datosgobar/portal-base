@@ -1,0 +1,26 @@
+#!/bin/bash
+
+set -e;
+cd $HOME/solr/example; java -jar start.jar >> $HOME/solr.log &
+#Run solr4
+
+cd {{ CKAN_HOME }}
+. bin/activate
+cd src/ckan
+pip install -r requirements.txt --allow-all-external
+pip install -r dev-requirements.txt --allow-all-external
+python setup.py develop
+export PGUSER=ckan
+export PGPASS=ckan
+export PGHOST=db
+export PGPASSWORD=ckan
+psql -c "CREATE USER ckan_default WITH PASSWORD 'pass';"
+psql -c "CREATE USER datastore_default WITH PASSWORD 'pass';"
+psql -c 'CREATE DATABASE ckan_test WITH OWNER ckan_default;'
+psql -c 'CREATE DATABASE datastore_test WITH OWNER ckan_default;'
+sed -i -e 's/sqlalchemy.url.*/sqlalchemy.url = postgresql:\/\/ckan_default:pass@db:5432\/ckan_test/' test-core.ini
+sed -i -e 's/.*datastore.read_url.*/ckan.datastore.read_url = postgresql:\/\/datastore_default:pass@db\/datastore_test/' test-core.ini
+sed -i -e 's/.*datastore.write_url.*/ckan.datastore.write_url = postgresql:\/\/ckan_default:pass@db\/datastore_test/' test-core.ini
+paster datastore -c test-core.ini set-permissions | psql
+cd {{ CKAN_HOME }}/src/ckan
+paster db init -c test-core.ini

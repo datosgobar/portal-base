@@ -1,0 +1,16 @@
+#!/bin/bash
+# Install java
+sudo apt-get update
+sudo apt-get -y install openjdk-7-jdk
+mkdir /usr/java
+ln -s /usr/lib/jvm/java-7-openjdk-amd64 /usr/java/default
+
+# Install Solr4
+cd /opt
+wget http://archive.apache.org/dist/lucene/solr/4.7.2/solr-4.7.2.tgz
+tar -xvf solr-4.7.2.tgz
+cp -R solr-4.7.2/example /opt/solr
+# Config solr+ckan!
+cd /usr/lib/ckan/default/src/ckan
+cp -R /opt/solr-4.7.2 $HOME/solr
+cp ckan/config/solr/schema.xml $HOME/solr/example/solr/collection1/conf
