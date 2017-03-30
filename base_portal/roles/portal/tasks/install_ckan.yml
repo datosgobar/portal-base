@@ -1,12 +1,6 @@
 ---
 
-# Ckan 2.5.4 is not compatible with harvestjson plugin
-#- name: Download ckan deb
-#  get_url:
-#    url: http://packaging.ckan.org/python-ckan_2.5-trusty_amd64.deb
-#    dest: /tmp
-
-- name: Download ckan deb from Azure
+- name: Download ckan deb
   get_url:
     url: http://packaging.ckan.org/python-ckan_2.5-trusty_amd64.deb
     dest: /tmp/python-ckan_2.5-trusty_amd64.deb
@@ -20,6 +14,15 @@
     - "{{ CKAN_CONFIG }}"
     - "{{ DEFAULT_CKAN_DATA }}"
     - "{{ CKAN_INIT }}"
+
+- name: Setup ckan_init.d subdirectories
+  file:
+    dest: "{{ CKAN_INIT }}/{{ item }}"
+    state: directory
+  with_items:
+    - tests
+    - run
+    - config
 
 - name: Create virtualenv
   pip:
