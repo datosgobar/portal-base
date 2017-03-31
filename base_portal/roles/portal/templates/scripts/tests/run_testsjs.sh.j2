@@ -1,0 +1,13 @@
+#!/bin/bash
+
+cd {{ CKAN_HOME }}
+source bin/activate
+bin/paster serve src/ckan/test-core.ini &
+sleep 5
+
+mocha-phantomjs http://localhost:5000/base/test/index.html
+
+solr4pid=$(ps | grep java | awk '{print $1}')
+if [ -n "$solr4pid" ]; then
+    kill $solr4pid
+fi

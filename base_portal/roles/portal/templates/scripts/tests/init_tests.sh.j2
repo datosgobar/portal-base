@@ -1,9 +1,5 @@
 #!/bin/bash
 
-set -e;
-cd $HOME/solr/example; java -jar start.jar >> $HOME/solr.log &
-#Run solr4
-
 cd {{ CKAN_HOME }}
 . bin/activate
 cd src/ckan

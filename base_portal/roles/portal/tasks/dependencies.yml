@@ -35,6 +35,7 @@
     - python-pip
     - libapache2-mod-wsgi
     - wget
+    - curl
     - vim
     - ca-certificates
     - inotify-tools

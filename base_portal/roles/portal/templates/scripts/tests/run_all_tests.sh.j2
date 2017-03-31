@@ -1,0 +1,17 @@
+#!/bin/bash
+cd {{ CKAN_INIT }}/tests/
+./init_tests.sh
+
+./run_solr4.sh
+
+./run_tests.sh
+cd {{ CKAN_HOME }}
+source bin/activate
+bin/paster serve src/ckan/test-core.ini &
+cd {{ CKAN_INIT }}
+./run_testsjs.sh
+
+solr4pid=$(ps | grep java | awk '{print $1}')
+if [ -n "$solr4pid" ]; then
+    kill $solr4pid
+fi
