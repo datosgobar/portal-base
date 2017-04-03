@@ -13,6 +13,5 @@ cd {{ CKAN_INIT }}/tests/
 ./run_testsjs.sh
 
 solr4pid=$(ps | grep java | awk '{print $1}')
-if [ -n "$solr4pid" ]; then
-    kill $solr4pid
-fi
+fuser 8983/tcp -k #Solr4
+fuser 5000/tcp -k #test server
