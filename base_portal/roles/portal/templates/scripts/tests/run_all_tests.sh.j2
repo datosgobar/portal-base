@@ -8,7 +8,7 @@ cd {{ CKAN_INIT }}/tests/
 cd {{ CKAN_HOME }}
 source bin/activate
 bin/paster serve src/ckan/test-core.ini &
-cd {{ CKAN_INIT }}
+cd {{ CKAN_INIT }}/tests/
 ./run_testsjs.sh
 
 solr4pid=$(ps | grep java | awk '{print $1}')
