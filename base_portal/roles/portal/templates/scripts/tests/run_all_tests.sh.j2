@@ -1,8 +1,8 @@
 #!/bin/bash
 cd {{ CKAN_INIT }}/tests/
+./run_solr4.sh
 ./init_tests.sh
 
-./run_solr4.sh
 
 ./run_tests.sh
 cd {{ CKAN_HOME }}
