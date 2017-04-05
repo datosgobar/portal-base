@@ -19,21 +19,21 @@ args = parser.parse_args()
 
 COMPOSE_FILE_URL = "https://raw.githubusercontent.com/datosgobar/%s/%s/latest.yml" % (args.repo, args.branch)
 
-print("Checking docker is available...")
+print("[ INFO ] Comprobando que docker esté instalado...")
 
 subprocess.check_call([
     "docker",
     "ps"
 ])
 
-print("Checking docker-compose is available")
+print("[ INFO ] Comprobando que docker-compose este instalado...")
 
 subprocess.check_call([
     "docker-compose",
     "--version",
 ])
 
-print("Downloading required files...")
+print("[ INFO ] Descargando archivos necesarios...")
 
 directory = path.dirname(path.realpath(__file__))
 
@@ -49,7 +49,7 @@ subprocess.check_call([
     compose_file_path
 ])
 
-print("Writing environment file...")
+print("[ INFO ] Escribiendo archivo de configuración del ambiente (.env) ...")
 
 with open(env_file_path, "w") as env_f:
     env_f.write("POSTGRES_USER=%s\n" % args.database_user)
@@ -65,7 +65,7 @@ subprocess.check_call([
     "nginx",
 ])
 
-print("waiting a few seconds for db start up...")
+print("[ INFO ] Espetando a que la base de datos este disponible...")
 
 time.sleep(10)
 
