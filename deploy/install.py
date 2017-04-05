@@ -71,6 +71,8 @@ time.sleep(10)
 
 subprocess.check_call([
     "docker-compose",
+    "-f",
+    compose_file_path,
     "exec",
     "portal",
     "/etc/ckan_init.d/init.sh",
