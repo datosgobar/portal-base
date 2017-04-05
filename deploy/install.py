@@ -38,7 +38,7 @@ print("[ INFO ] Descargando archivos necesarios...")
 
 directory = path.dirname(path.realpath(__file__))
 
-compose_file = "lasted.yml"
+compose_file = "latest.yml"
 env_file = ".env"
 compose_file_path = path.join(directory, compose_file)
 env_file_path = path.join(directory, env_file)
