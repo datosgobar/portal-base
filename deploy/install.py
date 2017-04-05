@@ -70,7 +70,7 @@ print("waiting a few seconds for db start up...")
 time.sleep(10)
 
 subprocess.check_call([
-    "docker",
+    "docker-compose",
     "exec",
     "portal",
     "/etc/ckan_init.d/init.sh",
