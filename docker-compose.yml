@@ -1,0 +1,38 @@
+version: '3'
+services:
+    nginx:
+      build: ./nginx/
+      image: datosgobar/base-portal-nginx:latest
+      ports:
+        - 80:80
+      depends_on:
+        - portal
+    portal:
+        build: ./base_portal/
+        image: datosgobar/base-portal:latest
+        ports:
+          - 8800:8800
+        depends_on:
+           - db
+           - solr
+           - redis
+           - postfix
+    db:
+      image: postgres:9.5
+      environment:
+        - POSTGRES_USER=ckan
+        - POSTGRES_PASSWORD=ckan
+        - POSTGRES_DB=ckan
+    redis:
+      image: redis:3.2.7-alpine
+    solr:
+      build: ./solr/
+      image: datosgobar/base-portal-solr:latest
+    postfix:
+      image: catatnight/postfix
+      ports:
+        - "25:25"
+        - "587:587"
+
+volumes:
+  production_ini: {}
