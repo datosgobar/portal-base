@@ -12,9 +12,18 @@ parser.add_argument('--branch', default='development')
 
 args = parser.parse_args()
 
+REPOS = {
+    "portal-andino": {
+        "containers": ['andino-nginx', 'andino', 'andino-solr', 'andino-postfix', 'andino-redis', 'andino-db']
+    },
+    "portal_datos.gob.ar": {
+        "containers": ['datosgobar-nginx', 'datosgobar', 'datosgobar-solr', 'datosgobar-postfix', 'datosgobar-redis', 'datosgobar-db']
+    }
+}
+
 COMPOSE_FILE_URL = "https://raw.githubusercontent.com/datosgobar/%s/%s/latest.yml" % (args.repo, args.branch)
 
-EXPECTED_CONTAINERS = ['andino-nginx', 'andino', 'andino-solr', 'andino-postfix', 'andino-redis', 'andino-db']
+EXPECTED_CONTAINERS = REPOS[args.repo]['containers']
 
 
 def check_docker():
