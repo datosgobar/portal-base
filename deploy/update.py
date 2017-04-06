@@ -60,7 +60,13 @@ def reload_application(compose_path):
     ])
 
 
-def check_previous_installation():
+def check_previous_installation(base_path):
+    compose_file = "latest.yml"
+    compose_file_path = path.join(base_path, compose_file)
+    if not path.isfile(compose_file_path):
+        print("[ ERROR ] Por favor corra este comando en el mismo directorio donde instaló la aplicación")
+        print("[ ERROR ] No se encontró el archivo %s en el directorio actual" % compose_file)
+        raise Exception("[ ERROR ] No se encontró una instalación.")
     output = subprocess.check_output([
         "docker",
         "ps",
@@ -86,7 +92,7 @@ print("[ INFO ] Comprobando que docker-compose este instalado...")
 check_compose()
 directory = path.dirname(path.realpath(__file__))
 print("[ INFO ] Comprobando instalacion previa...")
-check_previous_installation()
+check_previous_installation(directory)
 print("[ INFO ] Descargando archivos necesarios...")
 compose_file_path = get_compose_file(directory)
 print("[ INFO ] Actualizando la aplicación")
