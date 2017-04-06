@@ -4,7 +4,7 @@ Imagen basada en para los portales [andino](https://github.com/datosgobar/portal
 
 Contiene la instalación base de [Ckan](https://github.com/ckan/ckan) y los scripts especificos para los portales.
 
-Actualmente ckan-2.3.5
+Actualmente ckan-2.5.4
 
 
 ## Scripts disponibles:
@@ -33,7 +33,7 @@ Para inicializar las bases de datos, se debe usar el script `init.sh`. El mismo 
 
 Un ejemplo de su uso:
 
-    docker exec -it andino /etc/ckan_init.d/init.sh \
+    docker exec -it portal /etc/ckan_init.d/init.sh \
         -e admin@example.com \
         -h midominio.com \
         -p usuario_db \
@@ -45,4 +45,4 @@ Un ejemplo de su uso:
 
 Existe un script que setea los defaults en desarrollo:
 
-    docker exec -it andino /etc/ckan_init.d/init_dev.sh
+    docker exec -it portal /etc/ckan_init.d/init_dev.sh
