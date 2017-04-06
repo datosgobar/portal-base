@@ -76,13 +76,13 @@ def check_previous_installation(base_path):
         print("[ ERROR ] Por favor corra este comando en el mismo directorio donde instaló la aplicación")
         print("[ ERROR ] No se encontró el archivo %s en el directorio actual" % compose_file)
         raise Exception("[ ERROR ] No se encontró una instalación.")
-    output = str(subprocess.check_output([
+    output = subprocess.check_output([
         "docker",
         "ps",
         "-a",
         "--format",
         "'{{.Names}}'"
-    ]))
+    ]).decode("utf-8")
     local_containers = [container.strip("'") for container in output.split()]
     for container_name in EXPECTED_CONTAINERS:
         if container_name not in local_containers:
