@@ -8,7 +8,7 @@ from os import path
 parser = argparse.ArgumentParser(description='Actulizar andino or datosgobar con docker.')
 
 parser.add_argument('--repo', choices=['portal-andino', 'portal_datos.gob.ar'], default='portal-andino')
-parser.add_argument('--branch', default='development')
+parser.add_argument('--branch', default='master')
 
 args = parser.parse_args()
 
@@ -24,6 +24,9 @@ REPOS = {
 COMPOSE_FILE_URL = "https://raw.githubusercontent.com/datosgobar/%s/%s/latest.yml" % (args.repo, args.branch)
 
 EXPECTED_CONTAINERS = REPOS[args.repo]['containers']
+
+UPGRADE_DB_COMMAND = "/etc/ckan_init.d/conf/upgrade_db.sh"
+REBUILD_SEARCH_COMMAND = "/etc/ckan_init.d/run_rebuild_search.sh"
 
 
 def check_docker():
@@ -92,8 +95,22 @@ def check_previous_installation(base_path):
 
 
 def post_update_commands(compose_path):
-    pass
-
+    subprocess.check_call([
+        "docker-compose",
+        "-f",
+        compose_path,
+        "exec",
+        "portal",
+        UPGRADE_DB_COMMAND,
+    ])
+    subprocess.check_call([
+        "docker-compose",
+        "-f",
+        compose_path,
+        "exec",
+        "portal",
+        REBUILD_SEARCH_COMMAND,
+    ])
 
 print("[ INFO ] Comprobando que docker esté instalado...")
 check_docker()
