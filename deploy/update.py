@@ -112,12 +112,24 @@ def post_update_commands(compose_path):
         REBUILD_SEARCH_COMMAND,
     ])
 
+
+def restart_apps(compose_path):
+    subprocess.check_call([
+        "docker-compose",
+        "-f",
+        compose_path,
+        "restart",
+        "portal",
+        "nginx",
+    ])
+
+
 print("[ INFO ] Comprobando que docker esté instalado...")
 check_docker()
 print("[ INFO ] Comprobando que docker-compose este instalado...")
 check_compose()
 directory = path.dirname(path.realpath(__file__))
-print("[ INFO ] Comprobando instalacion previa...")
+print("[ INFO ] Comprobando instalación previa...")
 check_previous_installation(directory)
 print("[ INFO ] Descargando archivos necesarios...")
 compose_file_path = get_compose_file(directory)
@@ -125,4 +137,6 @@ print("[ INFO ] Actualizando la aplicación")
 reload_application(compose_file_path)
 print("[ INFO ] Corriendo comandos post-instalación")
 post_update_commands(compose_file_path)
+print("[ INFO ] Reiniciando")
+restart_apps(compose_file_path)
 print("[ INFO ] Listo.")
