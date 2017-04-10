@@ -5,7 +5,7 @@
 Los _releases_ son llevados a cabo mediante _tags_ de _git_.
 
 En principio, una nueva funcionaliadad debe ser implementada en un _branch_ de _git_.
-Luego de terminadad la misma, debe crearse un _pull-request_ y esperar a ser evaluado y aceptado.
+Luego de terminada la misma, debe crearse un _pull-request_ y esperar a ser evaluado y aceptado.
 Cuando se acepta un _pull-request_ debe "mergearse" al _branch master_.
 
 Para sacar una nueva version del portal base, basta con crear un nuevo _tag_ con incrementando la version correspondiente.
@@ -44,7 +44,7 @@ Por ejemplo, para sacar una verion `0.2`:
     git tag 0.2 -m "Version 0.2 del portal andino"
     git push --tags
 
-Esperamos a que se genere la imagen, luego ambiamos la imagen del servicio "portal" en el archivo `latest.yml` a `datosgobar/portal-andino:release-0.2`. y pusheamos el codigo al master del proyecto.
+Esperamos a que se genere la imagen, luego cambiamos la imagen del servicio "portal" en el archivo `latest.yml` a `datosgobar/portal-andino:release-0.2`. y pusheamos el codigo al master del proyecto.
 
 
 ### Actualizar un proyecto
