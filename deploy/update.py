@@ -114,6 +114,22 @@ def check_previous_installation(base_path):
 
 
 def post_update_commands(compose_path):
+    all_plugins = subprocess.check_output(
+        ["docker-compose",
+         "-f",
+         compose_path,
+         "exec",
+         "portal",
+         "grep", "-E", "^ckan.plugins.*", "/etc/ckan/default/production.ini"]
+    ).decode("utf-8").strip()
+    subprocess.check_call(
+        ["docker-compose",
+         "-f",
+         compose_path,
+         "exec",
+         "portal",
+         "sed", "-i", "s/^ckan\.plugins.*/ckan.plugins = stats/", "/etc/ckan/default/production.ini"]
+    )
     subprocess.check_call([
         "docker-compose",
         "-f",
@@ -122,6 +138,14 @@ def post_update_commands(compose_path):
         "portal",
         UPGRADE_DB_COMMAND,
     ])
+    subprocess.check_call(
+        ["docker-compose",
+         "-f",
+         compose_path,
+         "exec",
+         "portal",
+         "sed", "-i", "s/^ckan\.plugins.*/%s/" % all_plugins, "/etc/ckan/default/production.ini"]
+    )
     subprocess.check_call([
         "docker-compose",
         "-f",
