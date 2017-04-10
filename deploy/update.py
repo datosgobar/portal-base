@@ -68,8 +68,8 @@ def backup_database(base_path, compose_path):
         "env PGPASSWORD=$POSTGRES_PASSWORD pg_dump --format=custom -U $POSTGRES_USER $POSTGRES_DB",
     ]
     output = subprocess.check_output(cmd)
-
-    dump = path.join(base_path, "ckan.dump")
+    dump_name = "%s-ckan.dump" % time.strftime("%d:%m:%Y:%H:%M:%S")
+    dump = path.join(base_path, dump_name)
     with open(dump, "wb") as a_file:
         a_file.write(output)
 
