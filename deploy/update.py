@@ -17,7 +17,8 @@ REPOS = {
         "containers": ['andino-nginx', 'andino', 'andino-solr', 'andino-postfix', 'andino-redis', 'andino-db']
     },
     "portal_datos.gob.ar": {
-        "containers": ['datosgobar-nginx', 'datosgobar', 'datosgobar-solr', 'datosgobar-postfix', 'datosgobar-redis', 'datosgobar-db']
+        "containers": ['datosgobar-nginx', 'datosgobar', 'datosgobar-solr', 'datosgobar-postfix', 'datosgobar-redis',
+                       'datosgobar-db']
     }
 }
 
@@ -53,6 +54,23 @@ def get_compose_file(base_path):
         compose_file_path
     ])
     return compose_file_path
+
+
+def backup_database(base_path, compose_path):
+    db_container = subprocess.check_output(["docker-compose", "-f", compose_path, "ps", "-q", "db"])
+    cmd = [
+        "docker",
+        "exec",
+        "-i", db_container,
+        "bash",
+        "-lc",
+        "'env PGPASSWORD=$POSTGRES_PASSWORD pg_dump --format=custom -U $POSTGRES_USER $POSTGRES_DB'",
+    ]
+    output = subprocess.check_output(cmd)
+
+    dump = path.join(base_path, "ckan.dump")
+    with open(dump, "wb") as a_file:
+        a_file.write(output)
 
 
 def reload_application(compose_path):
@@ -133,6 +151,8 @@ print("[ INFO ] Comprobando instalación previa...")
 check_previous_installation(directory)
 print("[ INFO ] Descargando archivos necesarios...")
 compose_file_path = get_compose_file(directory)
+print("[ INFO ] Guardando base de datos...")
+backup_database(directory, compose_file_path)
 print("[ INFO ] Actualizando la aplicación")
 reload_application(compose_file_path)
 print("[ INFO ] Corriendo comandos post-instalación")
