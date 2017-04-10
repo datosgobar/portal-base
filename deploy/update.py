@@ -58,13 +58,14 @@ def get_compose_file(base_path):
 
 def backup_database(base_path, compose_path):
     db_container = subprocess.check_output(["docker-compose", "-f", compose_path, "ps", "-q", "db"])
+    db_container = db_container.decode("utf-8").strip()
     cmd = [
         "docker",
         "exec",
-        "-i", db_container,
+        db_container,
         "bash",
         "-lc",
-        "'env PGPASSWORD=$POSTGRES_PASSWORD pg_dump --format=custom -U $POSTGRES_USER $POSTGRES_DB'",
+        "env PGPASSWORD=$POSTGRES_PASSWORD pg_dump --format=custom -U $POSTGRES_USER $POSTGRES_DB",
     ]
     output = subprocess.check_output(cmd)
 
