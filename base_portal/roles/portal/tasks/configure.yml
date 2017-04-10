@@ -11,7 +11,7 @@
     src: ckan/production.ini.j2
     dest: "{{ CKAN_CONFIG }}/{{ CKAN_CONFIG_FILE }}"
 
-- name: Copy andino configuration files
+- name: Copy portal configuration files
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -19,6 +19,11 @@
     - {src: apache/apache.wsgi.j2, dest: "{{ CKAN_CONFIG }}/apache.wsgi"}
     - {src: ckan/datapusher.wsgi.j2, dest: /etc/ckan/datapusher.wsgi}
     - {src: ckan/export.map.json.j2, dest: "{{ CKAN_HOME }}/src/ckanext-datajson/ckanext/datajson/export_map/export.map.json"}
+
+- name: Replace TMS with IGN
+  copy:
+    src: "recline/recline.js"
+    dest: "{{ CKAN_HOME }}/src/ckan/ckanext/reclineview/theme/public/vendor/recline/recline.js"
 
 - name: Add user configuration scripts
   template:
