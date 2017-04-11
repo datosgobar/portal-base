@@ -5,3 +5,6 @@ pages:
     - 'Portal base': 'images/portal_base.md'
     - nginx: 'imagenes/nginx.md'
     - solr: 'imagene/solr.md'
+  - Deployment:
+    - install: 'deploy/install.md'
+    - update: 'deploy/update.md'
