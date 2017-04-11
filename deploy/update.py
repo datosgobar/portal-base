@@ -17,8 +17,10 @@ REPOS = {
         "containers": ['andino-nginx', 'andino', 'andino-solr', 'andino-postfix', 'andino-redis', 'andino-db']
     },
     "portal_datos.gob.ar": {
-        "containers": ['datosgobar-nginx', 'datosgobar', 'datosgobar-solr', 'datosgobar-postfix', 'datosgobar-redis',
-                       'datosgobar-db']
+        "containers": [
+            'datosgobar-nginx', 'datosgobar', 'datosgobar-solr',
+            'datosgobar-postfix', 'datosgobar-redis', 'datosgobar-db',
+        ]
     }
 }
 
@@ -162,8 +164,6 @@ def restart_apps(compose_path):
         "-f",
         compose_path,
         "restart",
-        "portal",
-        "nginx",
     ])
 
 
