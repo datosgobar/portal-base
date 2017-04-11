@@ -8,8 +8,8 @@ Imagenes utiles para la implementacion de los portales andino y datosgobar.
 
 ## Instalacion de portales
 
-Para instalar algun portal, se puede usar el script en `deploy/install.py`
+Para instalar algun portal, [ver la documentación](deploy/install.md)
 
 ## Actualizacion de portales
 
-Para actualizar algun portal, se puede utilizar el script en `deploy/update.py`
+Para actualizar algun portal, [ver la documentación](deploy/update.md)
