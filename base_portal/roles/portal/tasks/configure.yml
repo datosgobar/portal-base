@@ -27,18 +27,19 @@
 
 - name: Add user configuration scripts
   template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
+    src: "scripts/config/{{ item.src }}"
+    dest: "{{ CKAN_INIT }}/{{ item.dest }}"
   with_items:
-    - {src: scripts/config/init_db.sh.j2, dest: "{{ CKAN_INIT }}/init_db.sh"}
-    - {src: scripts/config/make_conf.sh.j2, dest: "{{ CKAN_INIT }}/make_conf.sh"}
-    - {src: scripts/config/add_admin.sh.j2, dest: "{{ CKAN_INIT }}/add_admin.sh"}
-    - {src: scripts/config/change_datapusher_url.sh.j2, dest: "{{ CKAN_INIT }}/change_datapusher_url.sh"}
-    - {src: scripts/config/change_site_url.sh.j2, dest: "{{ CKAN_INIT }}/change_site_url.sh"}
-    - {src: scripts/config/init.sh, dest: "{{ CKAN_INIT }}/init.sh"}
-    - {src: scripts/config/init_dev.sh, dest: "{{ CKAN_INIT }}/init_dev.sh"}
-    - {src: scripts/config/paster.sh.j2, dest: "{{ CKAN_INIT }}/paster.sh"}
-    - {src: scripts/config/update_conf.sh.j2, dest: "{{ CKAN_INIT }}/update_conf.sh"}
+    - {src: init_db.sh.j2, dest: "init_db.sh"}
+    - {src: make_conf.sh.j2, dest: "make_conf.sh"}
+    - {src: add_admin.sh.j2, dest: "add_admin.sh"}
+    - {src: change_datapusher_url.sh.j2, dest: "change_datapusher_url.sh"}
+    - {src: change_site_url.sh.j2, dest: "change_site_url.sh"}
+    - {src: init.sh, dest: "init.sh"}
+    - {src: init_dev.sh, dest: "init_dev.sh"}
+    - {src: paster.sh.j2, dest: "paster.sh"}
+    - {src: update_conf.sh.j2, dest: "update_conf.sh"}
+    - {src: upgrade_db.sh, dest: "upgrade_db.sh"}
 
 - name: Add run scripts
   template:

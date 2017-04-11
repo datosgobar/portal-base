@@ -6,7 +6,7 @@ WORKDIR /app
 ENV DEBIAN_FRONTEND=noninteractive \
     CKAN_APACHE2_PORT=8080 \
     CKAN_DATAPUSHER_PORT=8800 \
-    CKAN_VERSION=2.5.3 \
+    CKAN_VERSION=2.5.5 \
     CKAN_HOME=/usr/lib/ckan/default \
     CKAN_DATA=/var/lib/ckan \
     CKAN_DIST_CONFIG=/var/lib/ckan/theme_config

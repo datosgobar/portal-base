@@ -20,67 +20,82 @@ args = parser.parse_args()
 
 COMPOSE_FILE_URL = "https://raw.githubusercontent.com/datosgobar/%s/%s/latest.yml" % (args.repo, args.branch)
 
+
+def check_docker():
+    subprocess.check_call([
+        "docker",
+        "ps"
+    ])
+
+
+def check_compose():
+    subprocess.check_call([
+        "docker-compose",
+        "--version",
+    ])
+
+
+def get_compose_file(base_path):
+    compose_file = "latest.yml"
+    compose_file_path = path.join(base_path, compose_file)
+    subprocess.check_call([
+        "curl",
+        COMPOSE_FILE_URL,
+        "--output",
+        compose_file_path
+    ])
+    return compose_file_path
+
+
+def configure_env_file(base_path):
+    env_file = ".env"
+    env_file_path = path.join(base_path, env_file)
+    with open(env_file_path, "w") as env_f:
+        env_f.write("POSTGRES_USER=%s\n" % args.database_user)
+        env_f.write("POSTGRES_PASSWORD=%s\n" % args.database_password)
+
+
+def init_application(compose_path):
+    subprocess.check_call([
+        "docker-compose",
+        "-f",
+        compose_path,
+        "up",
+        "-d",
+        "nginx",
+    ])
+
+
+def configure_application(compose_path):
+    subprocess.check_call([
+        "docker-compose",
+        "-f",
+        compose_path,
+        "exec",
+        "portal",
+        "/etc/ckan_init.d/init.sh",
+        "-e", args.error_email,
+        "-h", args.site_host,
+        "-p", args.database_user,
+        "-P", args.database_password,
+        "-d", args.datastore_user,
+        "-D", args.datastore_password,
+    ])
+
+
 print("[ INFO ] Comprobando que docker esté instalado...")
-
-subprocess.check_call([
-    "docker",
-    "ps"
-])
-
+check_docker()
 print("[ INFO ] Comprobando que docker-compose este instalado...")
-
-subprocess.check_call([
-    "docker-compose",
-    "--version",
-])
-
+check_compose()
 print("[ INFO ] Descargando archivos necesarios...")
-
 directory = path.dirname(path.realpath(__file__))
-
-compose_file = "latest.yml"
-env_file = ".env"
-compose_file_path = path.join(directory, compose_file)
-env_file_path = path.join(directory, env_file)
-
-subprocess.check_call([
-    "curl",
-    COMPOSE_FILE_URL,
-    "--output",
-    compose_file_path
-])
-
+compose_file_path = get_compose_file(directory)
 print("[ INFO ] Escribiendo archivo de configuración del ambiente (.env) ...")
-
-with open(env_file_path, "w") as env_f:
-    env_f.write("POSTGRES_USER=%s\n" % args.database_user)
-    env_f.write("POSTGRES_PASSWORD=%s\n" % args.database_password)
-
-print("Starting up site")
-subprocess.check_call([
-    "docker-compose",
-    "-f",
-    compose_file_path,
-    "up",
-    "-d",
-    "nginx",
-])
-
+configure_env_file(directory)
+print("[ INFO ] Iniciando la aplicación")
+init_application(compose_file_path)
 print("[ INFO ] Espetando a que la base de datos este disponible...")
-
 time.sleep(10)
-
-subprocess.check_call([
-    "docker-compose",
-    "-f",
-    compose_file_path,
-    "exec",
-    "portal",
-    "/etc/ckan_init.d/init.sh",
-    "-e", args.error_email,
-    "-h", args.site_host,
-    "-p", args.database_user,
-    "-P", args.database_password,
-    "-d", args.datastore_user,
-    "-D", args.datastore_password,
-])
+print("[ INFO ] Configurando...")
+configure_application(compose_file_path)
+print("[ INFO ] Listo.")
