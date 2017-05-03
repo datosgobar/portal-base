@@ -4,7 +4,9 @@ services:
   - docker
 
 before_install:
-  - docker build -t datosgobar/portal-base:build .
+  - docker build -t datosgobar/portal-base:build base_portal
+  - docker build -t datosgobar/portal-base-solr:build solr
+  - docker build -t datosgobar/portal-base-nginx:build nginx
 
 script:
   - echo "Success"
