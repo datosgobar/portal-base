@@ -14,7 +14,7 @@ parser.add_argument('--database_password', required=True)
 parser.add_argument('--datastore_user', required=True)
 parser.add_argument('--datastore_password', required=True)
 parser.add_argument('--repo', choices=['portal-andino', 'portal_datos.gob.ar'], default='portal-andino')
-parser.add_argument('--branch', default='development')
+parser.add_argument('--branch', default='master')
 
 args = parser.parse_args()
 
