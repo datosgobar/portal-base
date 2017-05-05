@@ -49,6 +49,16 @@ export PGDATABASE=ckan
 export DATASTORE_DB=datastore_default
 export PGUSER="$database_user"
 export PGPASSWORD="$database_password"
+
+# Waiting for db
+until psql -h "$PGHOST" -U "$PGUSER" -c '\l'; do
+  >&2 echo "Postgres is unavailable - sleeping"
+  sleep 1
+done
+
+>&2 echo "Postgres is up - executing command"
+
+
 datapusher_host=$(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
 beaker_session_secret=$(openssl rand -base64 25)
 psql -c "CREATE ROLE $datastore_user WITH PASSWORD '$datastore_password';"
