@@ -72,6 +72,7 @@ def configure_application(compose_path):
         "-f",
         compose_path,
         "exec",
+        "-T",
         "portal",
         "/etc/ckan_init.d/init.sh",
         "-e", args.error_email,
