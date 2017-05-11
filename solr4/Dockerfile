@@ -1,7 +1,6 @@
 FROM ubuntu:14.04
 
 MAINTAINER Leandro Gomez<lgomez@devartis.com>
-
 RUN apt-get update && apt-get -y install openjdk-7-jdk wget jetty8 && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
@@ -16,6 +15,7 @@ ADD https://raw.githubusercontent.com/ckan/ckan/ckan-2.5.5/ckan/config/solr/sche
 COPY jetty.defaults /etc/defaults/jetty
 COPY jetty-logging.xml /opt/solr/etc/
 RUN useradd -d /opt/solr -s /sbin/false solr && chown solr:solr -R /opt/solr
+USER solr
 
 WORKDIR /opt/solr/
 
