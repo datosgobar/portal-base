@@ -1,8 +1,6 @@
 #!/bin/bash
 cd {{ CKAN_INIT }}/tests/
-./run_solr4.sh
 ./init_tests.sh
-
 
 ./run_tests.sh
 cd {{ CKAN_HOME }}
@@ -12,6 +10,4 @@ sleep 5
 cd {{ CKAN_INIT }}/tests/
 ./run_testsjs.sh
 
-solr4pid=$(ps | grep java | awk '{print $1}')
-fuser 8983/tcp -k #Solr4
 fuser 5000/tcp -k #test server

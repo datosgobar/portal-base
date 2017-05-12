@@ -1,32 +1,24 @@
-FROM solr:6.0
-MAINTAINER Jose A. Salgado<jose.salgado.wrk@gmail.com>
+FROM ubuntu:14.04
 
-# Variables de Entorno
-ENV SOLR_CORE ckan
-ENV SOLR_PORT 8983
+MAINTAINER Leandro Gomez<lgomez@devartis.com>
+RUN apt-get update && apt-get -y install openjdk-7-jdk wget jetty8 && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
-# User
-USER root
+RUN cd /opt && \
+    wget http://archive.apache.org/dist/lucene/solr/4.7.2/solr-4.7.2.tgz && \
+    tar -xvf solr-4.7.2.tgz && cp -R solr-4.7.2/example /opt/solr
 
-# Creamos los directorios necesarios para Solr
-RUN mkdir -p /opt/solr/server/solr/$SOLR_CORE/conf
-RUN mkdir -p /opt/solr/server/solr/$SOLR_CORE/data
+RUN mv /opt/solr/solr/collection1 /opt/solr/solr/ckan && \
+    echo "name=ckan" > /opt/solr/solr/ckan/core.properties
+ADD https://raw.githubusercontent.com/ckan/ckan/ckan-2.5.5/ckan/config/solr/schema.xml \
+    /opt/solr/solr/ckan/conf/schema.xml
+COPY jetty.defaults /etc/defaults/jetty
+COPY jetty-logging.xml /opt/solr/etc/
+RUN useradd -d /opt/solr -s /sbin/false solr && chown solr:solr -R /opt/solr
+USER solr
 
-# 
-ADD ./requiere/solrconfig.xml \
-https://raw.githubusercontent.com/ckan/ckan/ckan-2.5.2/ckan/config/solr/schema.xml \
-https://raw.githubusercontent.com/apache/lucene-solr/releases/lucene-solr/6.0.0/solr/server/solr/configsets/basic_configs/conf/currency.xml \
-https://raw.githubusercontent.com/apache/lucene-solr/releases/lucene-solr/6.0.0/solr/server/solr/configsets/basic_configs/conf/synonyms.txt \
-https://raw.githubusercontent.com/apache/lucene-solr/releases/lucene-solr/6.0.0/solr/server/solr/configsets/basic_configs/conf/stopwords.txt \
-https://raw.githubusercontent.com/apache/lucene-solr/releases/lucene-solr/6.0.0/solr/server/solr/configsets/basic_configs/conf/protwords.txt \
-https://raw.githubusercontent.com/apache/lucene-solr/releases/lucene-solr/6.0.0/solr/server/solr/configsets/data_driven_schema_configs/conf/elevate.xml \
-/opt/solr/server/solr/$SOLR_CORE/conf/
+WORKDIR /opt/solr/
 
-# Crear Core
-RUN echo name=$SOLR_CORE > /opt/solr/server/solr/$SOLR_CORE/core.properties
-ADD ./requiere/schema.xml /etc/solr/conf/schema.xml
+EXPOSE 8983
 
-# Correccion de permisos para Solr
-RUN chown -R $SOLR_USER:$SOLR_USER /opt/solr/server/solr/$SOLR_CORE
-
-EXPOSE $SOLR_PORT
+CMD ["java", "-jar", "start.jar"]
