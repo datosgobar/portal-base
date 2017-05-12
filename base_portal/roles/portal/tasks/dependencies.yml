@@ -41,3 +41,4 @@
     - inotify-tools
     - git-core
     - pgadmin3
+    - gettext
