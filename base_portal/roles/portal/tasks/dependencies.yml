@@ -42,3 +42,4 @@
     - git-core
     - pgadmin3
     - psmisc
+    - gettext
