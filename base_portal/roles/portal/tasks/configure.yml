@@ -40,6 +40,7 @@
     - {src: paster.sh.j2, dest: "paster.sh"}
     - {src: update_conf.sh.j2, dest: "update_conf.sh"}
     - {src: upgrade_db.sh, dest: "upgrade_db.sh"}
+    - {src: build-combined-ckan-mo.sh, dest: "build-combined-ckan-mo.sh"}
 
 - name: Add run scripts
   template:
