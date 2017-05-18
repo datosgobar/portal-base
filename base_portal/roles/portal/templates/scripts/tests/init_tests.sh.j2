@@ -18,7 +18,7 @@ sed -i -e 's/sqlalchemy.url.*/sqlalchemy.url = postgresql:\/\/ckan_default:pass@
 sed -i -e 's/.*datastore.read_url.*/ckan.datastore.read_url = postgresql:\/\/datastore_default:pass@db\/datastore_test/' test-core.ini
 sed -i -e 's/.*datastore.write_url.*/ckan.datastore.write_url = postgresql:\/\/ckan_default:pass@db\/datastore_test/' test-core.ini
 sed -i -e 's/.*datastore.write_url.*/ckan.datastore.write_url = postgresql:\/\/ckan_default:pass@db\/datastore_test/' test-core.ini
-sed -i -e 's/solr_url.*/solr_url = http:\/\/solr:8983\/solr\/ckan/' test-core.ini
+sed -i -e 's/solr_url.*/solr_url = http:\/\/localhost:8983\/solr/' test-core.ini
 
 paster datastore -c test-core.ini set-permissions | psql
 cd {{ CKAN_HOME }}/src/ckan

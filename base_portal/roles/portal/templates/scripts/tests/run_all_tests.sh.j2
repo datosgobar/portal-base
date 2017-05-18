@@ -1,5 +1,6 @@
 #!/bin/bash
 cd {{ CKAN_INIT }}/tests/
+./run_solr4.sh
 ./init_tests.sh
 
 ./run_tests.sh
@@ -10,4 +11,5 @@ sleep 5
 cd {{ CKAN_INIT }}/tests/
 ./run_testsjs.sh
 
+fuser 8983/tcp -k #Solr4
 fuser 5000/tcp -k #test server
