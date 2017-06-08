@@ -62,10 +62,11 @@ def fix_env_file(base_path):
     env_file_path = path.join(base_path, env_file)
     nginx_var = "NGINX_HOST_PORT"
     datastore_var = "DATASTORE_HOST_PORT"
-    with open(env_file_path, "a") as env_f:
-        if nginx_var not in env_f:
+    with open(env_file_path, "r+a") as env_f:
+        content = env_f.read()
+        if nginx_var not in content:
             env_f.write("%s=%s\n" % (nginx_var, "80"))
-        if datastore_var not in env_f:
+        if datastore_var not in content:
             env_f.write("%s=%s\n" % (datastore_var, "8800"))
 
 def backup_database(base_path, compose_path):
