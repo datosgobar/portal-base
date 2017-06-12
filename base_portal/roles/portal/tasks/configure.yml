@@ -65,9 +65,11 @@
     dest: "{{ CKAN_INIT }}/tests/{{ item.dest }}"
   with_items:
     - {src: install_nodejs.sh.j2, dest: install_nodejs.sh}
+    - {src: install_solr4.sh.j2, dest: install_solr4.sh}
     - {src: init_tests.sh.j2, dest: init_tests.sh}
     - {src: run_tests.sh.j2, dest: run_tests.sh}
     - {src: run_testsjs.sh.j2, dest: run_testsjs.sh}
+    - {src: run_solr4.sh.j2, dest: run_solr4.sh}
     - {src: run_all_tests.sh.j2, dest: run_all_tests.sh}
 
 

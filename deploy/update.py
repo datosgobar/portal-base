@@ -28,7 +28,7 @@ COMPOSE_FILE_URL = "https://raw.githubusercontent.com/datosgobar/%s/%s/latest.ym
 
 EXPECTED_CONTAINERS = REPOS[args.repo]['containers']
 
-UPGRADE_DB_COMMAND = "/etc/ckan_init.d/conf/upgrade_db.sh"
+UPGRADE_DB_COMMAND = "/etc/ckan_init.d/upgrade_db.sh"
 REBUILD_SEARCH_COMMAND = "/etc/ckan_init.d/run_rebuild_search.sh"
 
 
