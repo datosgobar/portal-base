@@ -1,20 +1,19 @@
 #!/usr/bin/env bash
+current_dir="$(dirname "$0")"
 
-if [ -z "$1" ]; then
-    echo "You must pass the Google Analytics' account id as a parameter."
-    exit 1;
-fi
+config_file="/etc/ckan/default/production.ini";
 
-if [ -z "$2" ]; then
-    echo "You must pass the Google Analytics' account name as a parameter."
-    exit 1;
-fi
+touch google_analytics_keys.ini
 
-account_id="$1";
-account_name="$2";
+echo -e "googleanalytics.id = " > google_analytics_keys.ini
+{{ CKAN_HOME }}/bin/paster --plugin=ckan config-tool $config_file -s app:main -f google_analytics_keys.ini
+echo -e "googleanalytics.account = " > google_analytics_keys.ini
+{{ CKAN_HOME }}/bin/paster --plugin=ckan config-tool $config_file -s app:main -f google_analytics_keys.ini
+echo -e "googleanalytics_resource_prefix = /downloads/" > google_analytics_keys.ini
+{{ CKAN_HOME }}/bin/paster --plugin=ckan config-tool $config_file -s app:main -f google_analytics_keys.ini
+echo -e "googleanalytics.domain = auto" > google_analytics_keys.ini
+{{ CKAN_HOME }}/bin/paster --plugin=ckan config-tool $config_file -s app:main -f google_analytics_keys.ini
 
-{{ CKAN_HOME }}/bin/paster --plugin=ckan config-tool /etc/ckan/default/production.ini -e \
-                                    "googleanalytics.id = $account_id" \
-                                    "googleanalytics.account = $account_name" \
-                                    "googleanalytics_resource_prefix = /downloads/" \
-                                    "googleanalytics.domain = auto"
+"$current_dir/change_google_analytics_account.sh" "UA-100603353-1" "Test Datosgobar"
+
+rm google_analytics_keys.ini
