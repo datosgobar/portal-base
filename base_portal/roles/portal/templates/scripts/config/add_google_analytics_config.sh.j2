@@ -1,19 +1,11 @@
 #!/usr/bin/env bash
 current_dir="$(dirname "$0")"
-
 config_file="/etc/ckan/default/production.ini";
 
-touch google_analytics_keys.ini
+sed -i '/ckan.plugins =/ s/$/\ \googleanalytics/' $config_file
+sed -i '/\[app:main\]/a ## Google Analytics\' $config_file
+sed -i '/## Google Analytics/a googleanalytics.id = ' $config_file
+sed -i '/## Google Analytics/a googleanalytics_resource_prefix = /downloads/' $config_file
+sed -i '/## Google Analytics/a googleanalytics.domain = auto' $config_file
 
-echo -e "googleanalytics.id = " > google_analytics_keys.ini
-{{ CKAN_HOME }}/bin/paster --plugin=ckan config-tool $config_file -s app:main -f google_analytics_keys.ini
-echo -e "googleanalytics.account = " > google_analytics_keys.ini
-{{ CKAN_HOME }}/bin/paster --plugin=ckan config-tool $config_file -s app:main -f google_analytics_keys.ini
-echo -e "googleanalytics_resource_prefix = /downloads/" > google_analytics_keys.ini
-{{ CKAN_HOME }}/bin/paster --plugin=ckan config-tool $config_file -s app:main -f google_analytics_keys.ini
-echo -e "googleanalytics.domain = auto" > google_analytics_keys.ini
-{{ CKAN_HOME }}/bin/paster --plugin=ckan config-tool $config_file -s app:main -f google_analytics_keys.ini
-
-"$current_dir/change_google_analytics_account.sh" "UA-100603353-1" "Test Datosgobar"
-
-rm google_analytics_keys.ini
+"$current_dir/change_google_analytics_account.sh" "UA-100603353-1"

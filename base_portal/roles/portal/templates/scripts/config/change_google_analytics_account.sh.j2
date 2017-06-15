@@ -5,14 +5,7 @@ if [ -z "$1" ]; then
     exit 1;
 fi
 
-if [ -z "$2" ]; then
-    echo "You must pass the Google Analytics' account name as a parameter."
-    exit 1;
-fi
-
 account_id="$1";
-account_name="$2";
 
 {{ CKAN_HOME }}/bin/paster --plugin=ckan config-tool /etc/ckan/default/production.ini -e \
-                                    "googleanalytics.id = $account_id" \
-                                    "googleanalytics.account = $account_name"
+                                    "googleanalytics.id = $account_id"
