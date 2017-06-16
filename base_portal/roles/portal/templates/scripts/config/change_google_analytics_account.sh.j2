@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+config_file="{{ CKAN_CONFIG }}/{{ CKAN_CONFIG_FILE }}";
+
 if [ -z "$1" ]; then
     echo "You must pass the Google Analytics' account id as a parameter."
     exit 1;
@@ -7,5 +9,5 @@ fi
 
 account_id="$1";
 
-{{ CKAN_HOME }}/bin/paster --plugin=ckan config-tool /etc/ckan/default/production.ini -e \
+{{ CKAN_HOME }}/bin/paster --plugin=ckan config-tool $config_file -e \
                                     "googleanalytics.id = $account_id"
