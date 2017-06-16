@@ -2,10 +2,25 @@
 current_dir="$(dirname "$0")"
 config_file="/etc/ckan/default/production.ini";
 
-sed -i '/ckan.plugins =/ s/$/\ \googleanalytics/' $config_file
-sed -i '/\[app:main\]/a ## Google Analytics\' $config_file
-sed -i '/## Google Analytics/a googleanalytics.id = ' $config_file
-sed -i '/## Google Analytics/a googleanalytics_resource_prefix = /downloads/' $config_file
-sed -i '/## Google Analytics/a googleanalytics.domain = auto' $config_file
+if ! grep '\googleanalytics$' $config_file ; then
+    sed -i '/ckan.plugins =/ s/$/\ \googleanalytics/' $config_file
+fi
+
+if ! grep '## Google Analytics' $config_file ; then
+    sed -i '/\[app:main\]/a ## Google Analytics\' $config_file
+fi
+
+if ! grep 'googleanalytics.id = ' $config_file; then
+    sed -i '/## Google Analytics/a googleanalytics.id = ' $config_file
+fi
+
+if ! grep 'googleanalytics_resource_prefix = ' $config_file; then
+    sed -i '/## Google Analytics/a googleanalytics_resource_prefix = /downloads/' $config_file
+fi
+
+if ! grep 'googleanalytics.domain = ' $config_file; then
+    sed -i '/## Google Analytics/a googleanalytics.domain = auto' $config_file
+fi
+
 
 "$current_dir/change_google_analytics_account.sh" "UA-100603353-1"
