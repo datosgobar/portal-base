@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 current_dir="$(dirname "$0")"
-config_file="/etc/ckan/default/production.ini";
+config_file="{{ CKAN_CONFIG }}/{{ CKAN_CONFIG_FILE }}";
 
 if ! grep '\googleanalytics$' $config_file ; then
     sed -i '/ckan.plugins =/ s/$/\ \googleanalytics/' $config_file
