@@ -57,6 +57,17 @@ def get_compose_file(base_path):
     ])
     return compose_file_path
 
+def fix_env_file(base_path):
+    env_file = ".env"
+    env_file_path = path.join(base_path, env_file)
+    nginx_var = "NGINX_HOST_PORT"
+    datastore_var = "DATASTORE_HOST_PORT"
+    with open(env_file_path, "r+a") as env_f:
+        content = env_f.read()
+        if nginx_var not in content:
+            env_f.write("%s=%s\n" % (nginx_var, "80"))
+        if datastore_var not in content:
+            env_f.write("%s=%s\n" % (datastore_var, "8800"))
 
 def backup_database(base_path, compose_path):
     db_container = subprocess.check_output(["docker-compose", "-f", compose_path, "ps", "-q", "db"])
@@ -176,6 +187,7 @@ print("[ INFO ] Comprobando instalación previa...")
 check_previous_installation(directory)
 print("[ INFO ] Descargando archivos necesarios...")
 compose_file_path = get_compose_file(directory)
+fix_env_file(directory)
 print("[ INFO ] Guardando base de datos...")
 backup_database(directory, compose_file_path)
 print("[ INFO ] Actualizando la aplicación")

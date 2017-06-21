@@ -13,6 +13,8 @@ parser.add_argument('--database_user', required=True)
 parser.add_argument('--database_password', required=True)
 parser.add_argument('--datastore_user', required=True)
 parser.add_argument('--datastore_password', required=True)
+parser.add_argument('--nginx_port', default="80")
+parser.add_argument('--datastore_port', default="8800")
 parser.add_argument('--repo', choices=['portal-andino', 'portal_datos.gob.ar'], default='portal-andino')
 parser.add_argument('--branch', default='master')
 
@@ -53,6 +55,8 @@ def configure_env_file(base_path):
     with open(env_file_path, "w") as env_f:
         env_f.write("POSTGRES_USER=%s\n" % args.database_user)
         env_f.write("POSTGRES_PASSWORD=%s\n" % args.database_password)
+        env_f.write("NGINX_HOST_PORT=%s\n" % args.nginx_port)
+        env_f.write("DATASTORE_HOST_PORT=%s\n" % args.datastore_port)
 
 
 def init_application(compose_path):
