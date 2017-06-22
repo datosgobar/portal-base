@@ -57,6 +57,7 @@ def configure_env_file(base_path):
         env_f.write("POSTGRES_PASSWORD=%s\n" % args.database_password)
         env_f.write("NGINX_HOST_PORT=%s\n" % args.nginx_port)
         env_f.write("DATASTORE_HOST_PORT=%s\n" % args.datastore_port)
+        env_f.write("maildomain=%s\n" % args.site_host)
 
 
 def init_application(compose_path):
