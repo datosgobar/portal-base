@@ -31,6 +31,12 @@ EXPECTED_CONTAINERS = REPOS[args.repo]['containers']
 UPGRADE_DB_COMMAND = "/etc/ckan_init.d/upgrade_db.sh"
 REBUILD_SEARCH_COMMAND = "/etc/ckan_init.d/run_rebuild_search.sh"
 
+def ask(question):
+    try:
+        _ask = raw_input
+    except NameError:
+        _ask = input
+    return _ask("%s\n" % question)
 
 def check_docker():
     subprocess.check_call([
@@ -62,12 +68,21 @@ def fix_env_file(base_path):
     env_file_path = path.join(base_path, env_file)
     nginx_var = "NGINX_HOST_PORT"
     datastore_var = "DATASTORE_HOST_PORT"
+    maildomain_var = "maildomain"
     with open(env_file_path, "r+a") as env_f:
         content = env_f.read()
         if nginx_var not in content:
             env_f.write("%s=%s\n" % (nginx_var, "80"))
         if datastore_var not in content:
             env_f.write("%s=%s\n" % (datastore_var, "8800"))
+        if maildomain_var not in content:
+            maildomain = ask("Por favor, ingrese su dominio para envío de emails (e.g.: myportal.com.ar): ")
+            real_maildomain = maildomain.strip()
+            if not real_maildomain:
+                print("Ningun valor fue ingresado, usando valor por defecto: localhost")
+                real_maildomain = "localhost"
+            env_f.write("%s=%s\n" % (maildomain_var, real_maildomain))
+
 
 def backup_database(base_path, compose_path):
     db_container = subprocess.check_output(["docker-compose", "-f", compose_path, "ps", "-q", "db"])
