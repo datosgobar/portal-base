@@ -142,16 +142,20 @@ def check_previous_installation(base_path):
 
 
 def post_update_commands(compose_path):
-    subprocess.check_call(
-        ["docker-compose",
-         "-f",
-         compose_path,
-         "exec",
-         "portal",
-         "bash",
-         "/etc/ckan_init.d/run_updates.sh"
-        ]
-    )
+    try:
+        subprocess.check_call(
+            ["docker-compose",
+            "-f",
+            compose_path,
+            "exec",
+            "portal",
+            "bash",
+            "/etc/ckan_init.d/run_updates.sh"
+            ]
+        )
+    except CalledProcessError as e:
+        print("[ INFO ] Error al correr el script 'run_updates.sh'")
+        print(e)
     all_plugins = subprocess.check_output(
         ["docker-compose",
          "-f",
