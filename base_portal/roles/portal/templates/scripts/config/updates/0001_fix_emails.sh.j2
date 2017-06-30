@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+CONFIG_FILE="{{ CKAN_CONFIG }}/{{ CKAN_CONFIG_FILE }}"
+
+sed -i s/#smtp\.mail_from.*/smtp.mail_from\ =\ Administrator/g $CONFIG_FILE
+sed -i s/#smtp\.password.*/smtp.password\ =\ portal/g $CONFIG_FILE
+sed -i s/#smtp\.user.*/smtp.user\ =\ portal/g $CONFIG_FILE

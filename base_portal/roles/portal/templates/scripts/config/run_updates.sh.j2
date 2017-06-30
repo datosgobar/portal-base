@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# All scripts in {{ UPDATE_DIR }} *must be* idempotent
+
+CONFIG_FILE="{{ CKAN_CONFIG }}/{{ CKAN_CONFIG_FILE }}"
+UPDATE_DIR="{{ UPDATE_DIR }}"
+
+
+for file in `ls $UPDATE_DIR*.sh | sort -V`; do 
+  echo "Running '$file'.";
+  bash $file;
+  echo "Done."
+done;
