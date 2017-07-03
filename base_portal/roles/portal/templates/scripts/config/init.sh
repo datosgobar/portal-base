@@ -59,12 +59,11 @@ done
 >&2 echo "Postgres is up - executing command"
 
 
-datapusher_host=$(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
 beaker_session_secret=$(openssl rand -base64 25)
 psql -c "CREATE ROLE $datastore_user WITH PASSWORD '$datastore_password';"
 psql -c "CREATE DATABASE $DATASTORE_DB OWNER $database_user;"
 
-"$current_dir/change_datapusher_url.sh" "http://$datapusher_host:8800"
+"$current_dir/change_datapusher_url.sh" "http://0.0.0.0:8800"
 "$current_dir/update_conf.sh" "error_email_from=$error_email"
 "$current_dir/change_site_url.sh" "http://$site_host"
 "$current_dir/update_conf.sh" "sqlalchemy.url=postgresql://$database_user:$database_password@$PGHOST:$PGPORT/$PGDATABASE"
