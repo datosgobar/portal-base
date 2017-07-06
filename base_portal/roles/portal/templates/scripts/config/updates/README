@@ -1,0 +1,7 @@
+Todos los scripts en el directorio actual deben hacer cambios *idempotentes*.
+Los cambios deben ser sobre archivos (Como el production.ini) y *no* debe asumirse que la aplicación está funcionando correctamente.
+
+Un ejemplo de estos scripts es el `0001_fix_emails.sh`.
+El mismo lleva a cabo un cambio directamente con la herramienta `sed`.
+Los cambios son idempotentes.
+No se hace ningún llamado a la aplicación o se usan las APIs de la misma.

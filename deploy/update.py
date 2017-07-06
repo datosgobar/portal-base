@@ -31,6 +31,12 @@ EXPECTED_CONTAINERS = REPOS[args.repo]['containers']
 UPGRADE_DB_COMMAND = "/etc/ckan_init.d/upgrade_db.sh"
 REBUILD_SEARCH_COMMAND = "/etc/ckan_init.d/run_rebuild_search.sh"
 
+def ask(question):
+    try:
+        _ask = raw_input
+    except NameError:
+        _ask = input
+    return _ask("%s\n" % question)
 
 def check_docker():
     subprocess.check_call([
@@ -56,6 +62,26 @@ def get_compose_file(base_path):
         compose_file_path
     ])
     return compose_file_path
+
+def fix_env_file(base_path):
+    env_file = ".env"
+    env_file_path = path.join(base_path, env_file)
+    nginx_var = "NGINX_HOST_PORT"
+    datastore_var = "DATASTORE_HOST_PORT"
+    maildomain_var = "maildomain"
+    with open(env_file_path, "r+a") as env_f:
+        content = env_f.read()
+        if nginx_var not in content:
+            env_f.write("%s=%s\n" % (nginx_var, "80"))
+        if datastore_var not in content:
+            env_f.write("%s=%s\n" % (datastore_var, "8800"))
+        if maildomain_var not in content:
+            maildomain = ask("Por favor, ingrese su dominio para envío de emails (e.g.: myportal.com.ar): ")
+            real_maildomain = maildomain.strip()
+            if not real_maildomain:
+                print("Ningun valor fue ingresado, usando valor por defecto: localhost")
+                real_maildomain = "localhost"
+            env_f.write("%s=%s\n" % (maildomain_var, real_maildomain))
 
 
 def backup_database(base_path, compose_path):
@@ -116,6 +142,20 @@ def check_previous_installation(base_path):
 
 
 def post_update_commands(compose_path):
+    try:
+        subprocess.check_call(
+            ["docker-compose",
+            "-f",
+            compose_path,
+            "exec",
+            "portal",
+            "bash",
+            "/etc/ckan_init.d/run_updates.sh"
+            ]
+        )
+    except CalledProcessError as e:
+        print("[ INFO ] Error al correr el script 'run_updates.sh'")
+        print(e)
     all_plugins = subprocess.check_output(
         ["docker-compose",
          "-f",
@@ -176,6 +216,7 @@ print("[ INFO ] Comprobando instalación previa...")
 check_previous_installation(directory)
 print("[ INFO ] Descargando archivos necesarios...")
 compose_file_path = get_compose_file(directory)
+fix_env_file(directory)
 print("[ INFO ] Guardando base de datos...")
 backup_database(directory, compose_file_path)
 print("[ INFO ] Actualizando la aplicación")

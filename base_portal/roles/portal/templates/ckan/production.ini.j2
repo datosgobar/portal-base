@@ -180,9 +180,9 @@ email_to =
 error_email_from =
 smtp.server = {{ DEFAULT_EMAIL_HOST }}
 #smtp.starttls = False
-#smtp.user = your_username@gmail.com
-#smtp.password = your_password
-#smtp.mail_from =
+smtp.user = portal
+smtp.password = portal
+smtp.mail_from = administrador
 
 ## Redis
 ckan.redis.url = redis://{{ DEFAULT_REDIS_HOST }}:{{ DEFAULT_REDIS_PORT }}/{{ DEFAULT_REDIS_DB }}
