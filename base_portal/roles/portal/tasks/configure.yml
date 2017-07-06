@@ -41,6 +41,7 @@
     - {src: update_conf.sh.j2, dest: "update_conf.sh"}
     - {src: upgrade_db.sh, dest: "upgrade_db.sh"}
     - {src: build-combined-ckan-mo.sh, dest: "build-combined-ckan-mo.sh"}
+    - {src: add_google_analytics_config.sh.j2, dest: "add_google_analytics_config.sh"}
     - {src: run_updates.sh.j2, dest: "run_updates.sh"}
 
 - name: Add run scripts
