@@ -22,5 +22,7 @@ if ! grep 'googleanalytics.domain = ' $config_file; then
     sed -i '/## Google Analytics/a googleanalytics.domain = auto' $config_file
 fi
 
+account_id="UA-101681828-1";
 
-"$current_dir/change_google_analytics_account.sh" "UA-101681828-1"
+{{ CKAN_HOME }}/bin/paster --plugin=ckan config-tool $config_file -e \
+                                    "googleanalytics.id = $account_id"

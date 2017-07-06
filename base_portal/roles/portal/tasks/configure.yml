@@ -68,7 +68,7 @@
     dest: "{{ UPDATE_DIR }}{{ item }}"
   with_items:
     - 0001_fix_emails.sh
-
+    - 0002_add_google_analytics_config.sh
 
 
 - name: Add tests scripts
