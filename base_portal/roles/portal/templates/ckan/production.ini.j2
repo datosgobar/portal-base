@@ -105,7 +105,7 @@ ckan.search.solr_commit = true
 #       Add ``datapusher`` to enable DataPusher
 #		Add ``resource_proxy`` to enable resorce proxying and get around the
 #		same origin policy
-ckan.plugins = datajson_harvest datajson harvest ckan_harvester stats text_view image_view recline_view hierarchy_display hierarchy_form gobar_theme datastore datapusher
+ckan.plugins = datajson_harvest datajson harvest ckan_harvester stats text_view image_view recline_view hierarchy_display hierarchy_form gobar_theme datastore datapusher googleanalytics
 
 # Define which views should be created by default
 # (plugins must be loaded in ckan.plugins)
@@ -193,7 +193,6 @@ ckan.harvest.mq.redis_db = {{ DEFAULT_REDIS_DB }}
 
 ## Google Analytics
 googleanalytics.id = UA-101681828-1
-googleanalytics.account = Test Datosgobar
 googleanalytics_resource_prefix = /downloads/
 googleanalytics.domain = auto
 
