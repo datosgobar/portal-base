@@ -11,7 +11,7 @@ if ! grep '## Google Analytics' $config_file ; then
 fi
 
 if ! grep 'googleanalytics.id = ' $config_file; then
-    sed -i '/## Google Analytics/a googleanalytics.id = ' $config_file
+    sed -i '/## Google Analytics/a googleanalytics.id = UA-101681828-1' $config_file
 fi
 
 if ! grep 'googleanalytics_resource_prefix = ' $config_file; then
@@ -21,8 +21,3 @@ fi
 if ! grep 'googleanalytics.domain = ' $config_file; then
     sed -i '/## Google Analytics/a googleanalytics.domain = auto' $config_file
 fi
-
-account_id="UA-101681828-1";
-
-{{ CKAN_HOME }}/bin/paster --plugin=ckan config-tool $config_file -e \
-                                    "googleanalytics.id = $account_id"
