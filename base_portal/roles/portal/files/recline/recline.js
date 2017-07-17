@@ -1065,9 +1065,8 @@ my.Flot = Backbone.View.extend({
     <div class="recline-flot"> \
       <div class="panel graph" style="display: block;"> \
         <div class="js-temp-notice alert alert-block"> \
-          <h3 class="alert-heading">¡Hola!</h3> \
-          <p>Todavía no hay un gráfico porque no sabemos qué campos querés trazar.</p> \
-          <p>Por favor decinos <strong>usando el menú de la derecha</strong>.</p> \
+          <h3 class="alert-heading">Por favor, filtrá para ver gráficos</h3> \
+          <p>Elegí en el menú de la derecha qué cambios te gustaría ver.</p> \
         </div> \
       </div> \
     </div> \
@@ -1415,10 +1414,10 @@ my.FlotControls = Backbone.View.extend({
           <option value="columns">Columnas</option> \
           </select> \
         </div> \
-        <label>Columna de Grupo (Eje 1)</label> \
+        <label>Columna Grupo (Eje 1)</label> \
         <div class="input editor-group"> \
           <select> \
-          <option value="">Por favor seleccione ...</option> \
+          <option value="">Elegí por favor...</option> \
           {{#fields}} \
           <option value="{{id}}">{{label}}</option> \
           {{/fields}} \
@@ -1428,7 +1427,7 @@ my.FlotControls = Backbone.View.extend({
         </div> \
       </div> \
       <div class="editor-buttons"> \
-        <button class="btn editor-add">Agregar Series</button> \
+        <button class="btn editor-add">Agregar series</button> \
       </div> \
       <div class="editor-buttons editor-submit" comment="hidden temporarily" style="display: none;"> \
         <button class="editor-save">Guardar</button> \
@@ -2335,10 +2334,10 @@ my.MapMenu = Backbone.View.extend({
         <div class="editor-field-type"> \
             <label class="radio"> \
               <input type="radio" id="editor-field-type-latlon" name="editor-field-type" value="latlon" checked="checked"/> \
-              Campos de Latitud / Longitud </label> \
+              Latitud y longitud </label> \
             <label class="radio"> \
               <input type="radio" id="editor-field-type-geom" name="editor-field-type" value="geom" /> \
-              Campo de GeoJSON</label> \
+              GeoJSON</label> \
         </div> \
         <div class="editor-field-type-latlon"> \
           <label>Latitud</label> \
@@ -2361,7 +2360,7 @@ my.MapMenu = Backbone.View.extend({
           </div> \
         </div> \
         <div class="editor-field-type-geom" style="display:none"> \
-          <label>Campo de Geometría (GeoJSON)</label> \
+          <label>GeoJSON</label> \
           <div class="input editor-geom-field"> \
             <select> \
             <option value=""></option> \
@@ -2373,15 +2372,15 @@ my.MapMenu = Backbone.View.extend({
         </div> \
       </div> \
       <div class="editor-buttons"> \
-        <button class="btn editor-update-map">Actualizar</button> \
+        <button class="btn editor-update-map">Aplicar</button> \
       </div> \
       <div class="editor-options" > \
         <label class="checkbox"> \
           <input type="checkbox" id="editor-auto-zoom" value="autozoom" checked="checked" /> \
-          Zoom automático de las funciones</label> \
+          Ajustar zoom automáticamente</label> \
         <label class="checkbox"> \
           <input type="checkbox" id="editor-cluster" value="cluster"/> \
-          Aglomerar marcadores</label> \
+          Agrupación de marcadores</label> \
       </div> \
       <input type="hidden" class="editor-id" value="map-1" /> \
     </form> \
@@ -2613,7 +2612,7 @@ my.MultiView = Backbone.View.extend({
         </div> \
       </div> \
       <div class="recline-results-info"> \
-        <span class="doc-count">{{recordCount}}</span> registros\
+        <span class="doc-count">{{recordCount}}</span> registros.\
       </div> \
       <div class="menu-right"> \
         <div class="btn-group" data-toggle="buttons-checkbox"> \
@@ -2647,7 +2646,7 @@ my.MultiView = Backbone.View.extend({
         })
       }, {
         id: 'graph',
-        label: 'Gráfico',
+        label: 'Gráficos',
         view: new my.Graph({
           model: this.model,
           state: this.state.get('view-graph')
@@ -2905,7 +2904,7 @@ my.MultiView = Backbone.View.extend({
   // * loader: if true show loading spinner
   notify: function(flash) {
     var tmplData = _.extend({
-      message: 'Cargando',
+      message: 'Ya casi estamos...',
       category: 'warning',
       loader: false
       },
@@ -4265,7 +4264,7 @@ my.QueryEditor = Backbone.View.extend({
         <span class="add-on"><i class="icon-search"></i></span> \
         <label>Search</label><input type="text" name="q" value="{{q}}" class="span2" placeholder="Buscar datos ..." class="search-query" /> \
       </div> \
-      <button type="submit" class="btn">Buscar &raquo;</button> \
+      <button type="submit" class="btn">Confirmar</button> \
     </form> \
   ',
 
