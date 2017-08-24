@@ -1,0 +1,20 @@
+---
+- hosts: all
+  tasks:
+    - name: "Crear estructura de directorios"
+      file:
+        path: "/etc/portal-modes/{{ item }}"
+        state: directory
+        mode: 0777
+      with_items:
+        - views
+        - scripts
+    - name: Descargar Pantallas de Error.
+      get_url:
+        url: "https://raw.githubusercontent.com/datosgobar/datos.gob.ar/master/errores/{{ item }}.htm"
+        dest: "/etc/portal-modes/views/{{ item }}.html"
+        mode: 0440
+      with_items:
+          - problemas-tecnicos
+          - muchas-visitas
+          - mejorando-el-sitio
