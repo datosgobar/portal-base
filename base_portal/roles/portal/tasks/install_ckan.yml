@@ -80,7 +80,7 @@
 
 - name: Install datajson AR
   pip:
-    name: git+https://github.com/datosgobar/ckanext-datajsonAR.git@867aa4da5dba1cdf6d76227a9ce4bd2991d9f5bb#egg=ckanext-datajson
+    name: git+https://github.com/datosgobar/ckanext-datajsonAR.git@v0.1.0#egg=ckanext-datajson
     virtualenv: "{{ CKAN_HOME }}"
 
 - name: Create hasrvest and other directories
