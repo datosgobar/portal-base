@@ -2,9 +2,9 @@ site_name: Portal Base
 pages:
   - Home: 'index.md'
   - Images:
-    - 'Portal base': 'images/portal_base.md'
+    - 'Portal base': 'imagenes/base_portal.md'
     - nginx: 'imagenes/nginx.md'
-    - solr: 'imagene/solr.md'
+    - solr: 'imagenes/solr.md'
   - Deployment:
     - install: 'deploy/install.md'
     - update: 'deploy/update.md'
