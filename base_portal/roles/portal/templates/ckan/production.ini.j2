@@ -105,7 +105,7 @@ ckan.search.solr_commit = true
 #       Add ``datapusher`` to enable DataPusher
 #		Add ``resource_proxy`` to enable resorce proxying and get around the
 #		same origin policy
-ckan.plugins = datajson_harvest datajson harvest ckan_harvester stats text_view image_view recline_view hierarchy_display hierarchy_form gobar_theme datastore datapusher googleanalytics
+ckan.plugins = datajson stats text_view image_view recline_view hierarchy_display hierarchy_form gobar_theme datastore datapusher googleanalytics
 
 # Define which views should be created by default
 # (plugins must be loaded in ckan.plugins)
@@ -234,5 +234,4 @@ format = %(asctime)s %(levelname)-5.5s [%(name)s] %(message)s
 [datajson]
 ckanext.datajson.path = /data.json
 ckanext.datajsonld.path = /data.jsonld
-ckanext.datajsonld.id = http://104.131.35.253/data.json
 ckanext.datajson.url_enabled = True
