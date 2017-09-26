@@ -1,12 +1,5 @@
 version: '3'
 services:
-    nginx:
-      build: ./nginx/
-      image: datosgobar/base-portal-nginx:latest
-      ports:
-        - 80:80
-      depends_on:
-        - portal
     portal:
         build: ./base_portal/
         image: datosgobar/base-portal:latest
