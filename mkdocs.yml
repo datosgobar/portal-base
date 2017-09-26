@@ -8,3 +8,4 @@ pages:
   - Deployment:
     - install: 'deploy/install.md'
     - update: 'deploy/update.md'
+theme: readthedocs

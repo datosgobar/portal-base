@@ -1,51 +1,89 @@
 # Instalación de portales
 
-La instalación de portales puede ser llevada a cabo mediantes el script `deploy/install.py`.
-Para ello, puede descargarse y correrlo en línea de comando.
+## Pre-requisitos
 
-    wget https://raw.github.com/datosgobar/portal-base/master/deploy/install.py
-
-    python ./install.py
-
-Es script requerirá ciertos parámetros para completar la instalación:
-
-    --error_email <email donde se enviarán los errores de la aplicación>
-    --site_host <ip o dominio de la aplicación>
-    --database_user <usuario de la base de datos a crear>
-    --database_password <contraseña de la base de datos a crear>
-    --datastore_user <usuario del "datastore" de ckan a crear>
-    --datastore_password <contraseña del "datastore" de ckan a crear>
-
-Además, acepta los siguientes parámetros, con sus correspondientes valores por defecto:
-
-    --repo < portal_datos.gob.ar o portal-andino> default: portal-andino
-    --branch < tag o branch a instalar de la aplicación > default: master
-    --nginx_port < puerto > default: 80
-    --datastore_port < puerto > default: 8800
-
-El script tiene el comportamiento predeterminado de instalar la *última versión* de **portal-andino**.
-
-El comando debe ser corrido **en el lugar donde se desea instalar la aplicación**.
-Por ejemplo, si deseo instalar la aplicación en `/etc/mi_portal`:
-
-    sudo mkdir /etc/mi_portal
-    cd /etc/mi_portal
-    sudo wget https://raw.github.com/datosgobar/portal-base/master/deploy/install.py
-    sudo python ./install.py
-
-O puedo instalarla en alguna carpeta de un usuario:
+Previo a la instalacion, prepararemos el entorno:
 
     mkdir ~/mi_portal/
+    sudo ln -s ~/mi_portal/ /etc/mi_portal
     cd ~/mi_portal/
-    wget https://raw.github.com/datosgobar/portal-base/master/deploy/install.py
-    python ./install.py
 
+## Instalacion
 
-## Portal andino
+La instalación de portales puede ser llevada a cabo mediantes el script `deploy/install.py`.
+Este script requerirá ciertos parámetros para completar la instalación:
 
-El script de instalación debería dejar la aplicación andando en el puerto `80`.
++ --`error_email`
+  - description: EMail donde se enviarán los errores de la aplicación.
+  - required: True
+  - default: None
++ --`site_host`  
+  - description: IP o dominio de la aplicación.
+  - required: True
++ --`database_user`
+  - description: Usuario de la base de datos a crear.
+  - required: True
+  - default: None
++ --`database_password`
+  - description: Contraseña de la base de datos a crear.
+  - required: True
+  - default: None
++ --`datastore_user`
+  - description: Usuario del "datastore" de ckan a crear.
+  - required: True
+  - default: None
++ --`datastore_password`
+  - description: Contraseña del "datastore" de ckan a crear.
+  - required: True
+  - default: None
 
-## Portal datos.gob.ar
++ --`repo`
+  - description: portal_datos.gob.ar o portal-andino
+  - required: False
+  - default: portal-andino
 
-Algunos comandos extras son necesarios para instalar completamente el portal.
-Ver [la documentación del mismo](http://portal-datosgobar.readthedocs.io/es/latest/)
++ --`branch`
+  - description: tag o branch a instalar de la aplicación.
+  - required: False
+  - default: master
+
++ --`nginx_port`
+  - description: Puerto sobre el que escuchara NGINX.
+  - required: False
+  - default: 80
+
++ --`datastore_port`
+  - description: Puerto para DataPusher.
+  - required: False
+  - default: 8800
+
+Por comodidad, utilizaremos variables de entorno para completar los argumentos requeridos.
+
+```bash
+ERROR_EMAIL=errors@email.com
+SITE_HOST=http://un-dominio.com
+DATABASE_USER=my_default_db_user
+DATABASE_PASSWORD=my_default_db_user_pass
+DATASTORE_USER=my_datastore_db_user
+DATASTORE_PASSWORD=my_datastore_db_user_pass
+```
+
+Luego, lanzaremos la instalacion:
+
+```bash
+# Asumo que se esta en /etc/mi_portal
+# Descargamos el instalador
+wget https://raw.github.com/datosgobar/portal-base/master/deploy/install.py
+python ./install.py --error_email "$ERROR_EMAIL" \
+                    --site_host "$SITE_HOST" \
+                    --database_user "$DATABASE_USER" \
+                    --database_password "$DATABASE_PASSWORD" \
+                    --datastore_user "$DATASTORE_USER" \
+                    --datastore_password "$DATASTORE_PASSWORD" \
+                    --repo portal_datos.gob.ar
+
+# Inicializar el portal a sus valores productipor omision.
+docker-compose -f latest.yml exec portal bash /etc/ckan_init.d/init_datosgobar.sh
+```
+
+_El script tiene el comportamiento predeterminado de instalar la *última versión* de **portal-andino**._
