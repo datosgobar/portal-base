@@ -15,7 +15,6 @@
     - "{{ DEFAULT_CKAN_DATA }}"
     - "{{ CKAN_INIT }}"
     - "{{ CKAN_DIST_CONFIG }}"
-    - "{{ CKAN_DIST_CONFIG }}/public/user_images"
     - "{{ UPDATE_DIR }}"
 
 - name: Setup ckan_init.d subdirectories
