@@ -15,6 +15,7 @@
     - "{{ DEFAULT_CKAN_DATA }}"
     - "{{ CKAN_INIT }}"
     - "{{ CKAN_DIST_CONFIG }}"
+    - "{{ CKAN_DIST_CONFIG }}/public/user_images"
     - "{{ UPDATE_DIR }}"
 
 - name: Setup ckan_init.d subdirectories
@@ -54,14 +55,6 @@
     name: requests[security]
     virtualenv: "{{ CKAN_HOME }}"
 
-- name: Install custom packages
-  pip:
-    name: "{{ item }}"
-    virtualenv: "{{ CKAN_HOME }}"
-  with_items:
-    - git+https://github.com/datagovuk/ckanext-hierarchy.git@3f2a258a46d5577c449678bf83f0ec1c6b6e7795#egg=ckanext-hierarchy
-    - git+https://github.com/ckan/ckanext-googleanalytics.git@v2.0.2#egg=ckanext-googleanalytics
-
 - name: Install some requirements
   pip:
     name: "{{ item }}"
@@ -72,10 +65,14 @@
     - jsonschema
     - rfc3987
 
-- name: Install datajson AR
+- name: Install custom packages
   pip:
-    name: git+https://github.com/datosgobar/ckanext-datajsonAR.git@v0.1.1#egg=ckanext-datajson
+    name: "{{ item }}"
     virtualenv: "{{ CKAN_HOME }}"
+  with_items:
+    - git+https://github.com/datagovuk/ckanext-hierarchy.git@3f2a258a46d5577c449678bf83f0ec1c6b6e7795#egg=ckanext-hierarchy
+    - git+https://github.com/ckan/ckanext-googleanalytics.git@v2.0.2#egg=ckanext-googleanalytics
+    - git+https://github.com/datosgobar/ckanext-datajsonAR.git@v0.1.1#egg=ckanext-datajson
 
 - name: Change owners
   file:
