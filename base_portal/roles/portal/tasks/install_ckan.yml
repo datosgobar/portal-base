@@ -77,6 +77,7 @@
     - lepl
     - jsonschema
     - rfc3987
+    - "pydatajson<0.4"
 
 - name: Install datajson AR
   pip:
