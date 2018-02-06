@@ -5,6 +5,10 @@ set -e;
 chown www-data:www-data {{ DEFAULT_CKAN_DATA }} {{ CKAN_DIST_MEDIA }} {{ CKAN_DIST_CONFIG }}
 chmod u+rwx {{ DEFAULT_CKAN_DATA }} {{ CKAN_DIST_MEDIA }} {{ CKAN_DIST_CONFIG }}
 export GOBAR_CONFIG=$(cat /var/lib/ckan/theme_config/settings.json)
-	
+
+APACHE_PID=/var/run/apache2/apache2.pid
+printf  "Borrar si existe: apache2.pid ($APACHE_PID):....."
+[ -e  "$APACHE_PID" ] && rm -f $APACHE_PID && printf "[OK eliminando apache2.pid]\n"
+
 service apache2 stop
 exec {{ CKAN_INIT }}/run_andino.sh
