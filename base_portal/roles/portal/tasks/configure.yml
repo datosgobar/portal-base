@@ -1,10 +1,22 @@
 ---
 
 
-- name: configure apache
+- name: Configure apache CKAN
   template:
     src: apache/ckan_default.conf.j2
     dest: /etc/apache2/sites-enabled/ckan_default.conf
+
+- name: Configure apache Datapusher
+  template:
+    src: apache/datapusher.conf.j2
+    dest: /etc/apache2/sites-enabled/datapusher.conf
+
+- name: Configure apache
+  lineinfile:
+    path: /etc/apache2/apache2.conf
+    regexp: "^ErrorLog.*"
+    line: ErrorLog /proc/self/fd/1
+
 
 - name: Configure CKAN
   template:
