@@ -12,8 +12,8 @@ WSGISocketPrefix /var/run/wsgi
 
     WSGIProcessGroup ckan_default
 
-    ErrorLog /dev/stderr
-    TransferLog /dev/stdout
+    ErrorLog /proc/self/fd/1
+    CustomLog /proc/self/fd/2 combined
 
     <Directory />
     Require all granted
