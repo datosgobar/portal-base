@@ -1,8 +1,8 @@
 ---
 
-- include: dependencies.yml
-- include: install_ckan.yml
-- include: configure.yml
+- import_tasks: dependencies.yml
+- import_tasks: install_ckan.yml
+- import_tasks: configure.yml
 
 - name: Clean
   shell: apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
