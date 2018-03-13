@@ -64,7 +64,7 @@ psql -c "CREATE ROLE $datastore_user WITH PASSWORD '$datastore_password';"
 psql -c "CREATE DATABASE $DATASTORE_DB OWNER $database_user;"
 
 "$current_dir/change_datapusher_url.sh" "http://0.0.0.0:8800"
-"$current_dir/update_conf.sh" "error_email_from=$error_email"
+"$current_dir/update_conf.sh" "email_to=$error_email"
 "$current_dir/change_site_url.sh" "http://$site_host"
 "$current_dir/update_conf.sh" "sqlalchemy.url=postgresql://$database_user:$database_password@$PGHOST:$PGPORT/$PGDATABASE"
 "$current_dir/update_conf.sh" "ckan.datastore.write_url=postgresql://$database_user:$database_password@$PGHOST:$PGPORT/$DATASTORE_DB"

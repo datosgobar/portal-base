@@ -177,12 +177,12 @@ ckan.hide_activity_from_users = %(ckan.site_id)s
 
 # Well actually postfix is now available at host: {{ DEFAULT_EMAIL_HOST }}
 email_to =
-error_email_from =
+error_email_from = andino-errors@example.com
 smtp.server = {{ DEFAULT_EMAIL_HOST }}
 #smtp.starttls = False
 smtp.user = portal
 smtp.password = portal
-smtp.mail_from = administrador
+smtp.mail_from = administrador@example.com
 
 ## Redis
 ckan.redis.url = redis://{{ DEFAULT_REDIS_HOST }}:{{ DEFAULT_REDIS_PORT }}/{{ DEFAULT_REDIS_DB }}
