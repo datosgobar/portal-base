@@ -62,7 +62,7 @@
     - git+https://github.com/datagovuk/ckanext-hierarchy.git@3f2a258a46d5577c449678bf83f0ec1c6b6e7795#egg=ckanext-hierarchy
     - "-e git+https://github.com/ckan/ckanext-harvest.git@v1.0.0#egg=ckanext-harvest"
     - "-e git+https://github.com/ckan/ckanext-googleanalytics.git@v2.0.2#egg=ckanext-googleanalytics"
-    - "-e git+https://github.com/datosgobar/ckanext-datajsonAR.git@v0.1.13#egg=ckanext-datajson"
+    - "-e git+https://github.com/datosgobar/ckanext-datajsonAR.git@v0.1.14#egg=ckanext-datajson"
 
 - name: Install datajson AR requirements
   pip:
