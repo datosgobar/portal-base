@@ -9,7 +9,7 @@ services:
         - portal
     portal:
         build: ./base_portal/
-        image: datosgobar/base-portal:latest
+        image: datosgobar/portal-base:latest
         ports:
           - 8800:8800
         depends_on:
