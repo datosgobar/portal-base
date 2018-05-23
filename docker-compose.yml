@@ -27,7 +27,7 @@ services:
       image: redis:3.2.7-alpine
     solr:
       build: ./solr/
-      image: datosgobar/base-portal-solr:latest
+      image: datosgobar/portal-base-solr:release-0.7
     postfix:
       image: catatnight/postfix
       ports:
