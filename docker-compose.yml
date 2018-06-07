@@ -2,14 +2,14 @@ version: '3'
 services:
     nginx:
       build: ./nginx/
-      image: datosgobar/base-portal-nginx:latest
+      image: datosgobar/base-portal-nginx:0.8.24
       ports:
         - 80:80
       depends_on:
         - portal
     portal:
         build: ./base_portal/
-        image: datosgobar/base-portal:latest
+        image: datosgobar/base-portal:0.8.24
         ports:
           - 8800:8800
         depends_on:
@@ -27,7 +27,7 @@ services:
       image: redis:3.2.7-alpine
     solr:
       build: ./solr/
-      image: datosgobar/base-portal-solr:latest
+      image: datosgobar/base-portal-solr:0.8.24
     postfix:
       image: catatnight/postfix
       ports:
