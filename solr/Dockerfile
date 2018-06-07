@@ -10,7 +10,7 @@ RUN cd /opt && \
 
 RUN mv /opt/solr/solr/collection1 /opt/solr/solr/ckan && \
     echo "name=ckan" > /opt/solr/solr/ckan/core.properties
-ADD https://raw.githubusercontent.com/ckan/ckan/ckan-2.5.5/ckan/config/solr/schema.xml \
+ADD https://raw.githubusercontent.com/ckan/ckan/ckan-2.7.4/ckan/config/solr/schema.xml \
     /opt/solr/solr/ckan/conf/schema.xml
 COPY jetty.defaults /etc/defaults/jetty
 COPY jetty-logging.xml /opt/solr/etc/

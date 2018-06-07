@@ -4,7 +4,7 @@ Imagen basada en para los portales [andino](https://github.com/datosgobar/portal
 
 Contiene la instalación base de [Ckan](https://github.com/ckan/ckan) y los scripts especificos para los portales.
 
-Actualmente ckan-2.5.4
+Actualmente ckan-2.7.4
 
 
 ## Scripts disponibles:
