@@ -79,6 +79,7 @@
   with_items:
     - 0001_fix_emails.sh
     - 0002_add_google_analytics_config.sh
+    - 0003_add_package_metadata_created.sh
 
 
 - name: Add tests scripts

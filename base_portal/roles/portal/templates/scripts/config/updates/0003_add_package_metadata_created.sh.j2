@@ -1,0 +1,20 @@
+sudo -u postgres psql -c "
+    IF NOT EXISTS(SELECT * FROM information_schema.columns WHERE table_name='package' AND column_name='metadata_created') OR
+     NOT EXISTS(SELECT * FROM information_schema.columns WHERE table_name='package_revision' AND column_name='metadata_created') THEN
+
+        IF NOT EXISTS(SELECT * FROM information_schema.columns WHERE table_name='package_revision' AND column_name='metadata_created') THEN
+            ALTER TABLE package_revision ADD COLUMN metadata_created timestamp without time zone;
+        END IF;
+
+        IF NOT EXISTS(SELECT * FROM information_schema.columns WHERE table_name='package' AND column_name='metadata_created') THEN
+            ALTER TABLE package ADD COLUMN metadata_created timestamp without time zone;
+        END IF;
+
+        UPDATE package SET metadata_created=
+            (SELECT revision_timestamp
+             FROM package_revision
+             WHERE id=package.id
+             ORDER BY revision_timestamp ASC
+             LIMIT 1);
+    END IF; "
+ckan_default
