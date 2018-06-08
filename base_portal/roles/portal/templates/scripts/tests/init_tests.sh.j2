@@ -3,8 +3,8 @@
 cd {{ CKAN_HOME }}
 . bin/activate
 cd src/ckan
-pip install -r requirements.txt --allow-all-external
-pip install -r dev-requirements.txt --allow-all-external
+pip install -r requirements.txt
+pip install -r dev-requirements.txt
 python setup.py develop
 export PGUSER=ckan
 export PGPASS=ckan
