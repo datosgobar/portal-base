@@ -23,6 +23,12 @@
     src: ckan/production.ini.j2
     dest: "{{ CKAN_CONFIG }}/{{ CKAN_CONFIG_FILE }}"
 
+
+- name: Configure supervisor
+  template:
+    src: ckan/supervisor-ckan-worker.conf.j2
+    dest: "{{ CKAN_CONFIG }}/supervisor-ckan-worker.conf"
+
 - name: Copy portal configuration files
   template:
     src: "{{ item.src }}"

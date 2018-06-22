@@ -1,0 +1,26 @@
+; =======================================================
+; Supervisor configuration for CKAN background job worker
+; =======================================================
+
+[program:ckan-worker]
+command=/usr/lib/ckan/default/bin/paster --plugin=ckan jobs worker --config=/etc/ckan/default/production.ini
+user=www-data
+numprocs=1
+process_name=%(program_name)s-%(process_num)02d
+stdout_logfile=/var/log/ckan-worker.log
+stderr_logfile=/var/log/ckan-worker.log
+autostart=true
+autorestart=true
+startsecs=10
+stopwaitsecs = 600
+
+[program:ckan-worker-2]
+command=/usr/lib/ckan/default/bin/paster --plugin=ckan jobs worker andino-datajson-queue --config=/etc/ckan/default/production.ini
+user=www-data
+numprocs=1
+process_name=%(program_name)s-%(process_num)02d
+stdout_logfile=/var/log/ckan-worker.log
+stderr_logfile=/var/log/ckan-worker.log
+autostart=true
+autorestart=true
+startsecs=10
