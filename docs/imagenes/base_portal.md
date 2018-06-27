@@ -14,7 +14,7 @@ Dado un script llamado `init.sh`, puede ser ejecutado de la forma:
 
     docker exec *container* -it /etc/ckan_init.d/init.sh
     
-* Agregar administrador del sitio: `add_admin.sh $ADMIN_USERNAME`
+* Agregar administrador del sitio: `add_admin.sh $ADMIN_USERNAME $ADMIN_EMAIL`
 * Cambiar la url del datapusher: `change_datapusher_url $IP_O_HOST`
 * Inicializar la aplicacion: `init.sh ...` (Ver parametro más abajo)
 * Correr comando en paster: `paster.sh <comando>` (por ejemplo: `paster.sh --plugin=ckan db init`)
