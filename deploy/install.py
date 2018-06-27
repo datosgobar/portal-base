@@ -89,19 +89,33 @@ def configure_application(compose_path):
     ])
 
 
+def restart_post_configuration_services(compose_path):
+    subprocess.check_call([
+        "docker-compose",
+        "-f",
+        compose_path,
+        "exec",
+        "-T",
+        "portal",
+        "supervisorctl restart all",
+    ])
+
+
 print("[ INFO ] Comprobando que docker esté instalado...")
 check_docker()
-print("[ INFO ] Comprobando que docker-compose este instalado...")
+print("[ INFO ] Comprobando que docker-compose esté instalado...")
 check_compose()
 print("[ INFO ] Descargando archivos necesarios...")
 directory = path.dirname(path.realpath(__file__))
 compose_file_path = get_compose_file(directory)
-print("[ INFO ] Escribiendo archivo de configuración del ambiente (.env) ...")
+print("[ INFO ] Escribiendo archivo de configuración del ambiente (.env)...")
 configure_env_file(directory)
-print("[ INFO ] Iniciando la aplicación")
+print("[ INFO ] Iniciando la aplicación...")
 init_application(compose_file_path)
-print("[ INFO ] Espetando a que la base de datos este disponible...")
+print("[ INFO ] Esperando a que la base de datos este disponible...")
 time.sleep(10)
 print("[ INFO ] Configurando...")
 configure_application(compose_file_path)
-print("[ INFO ] Listo.")
+print("[ INFO ] Reiniciando servicios post configuración de Andino...")
+restart_post_configuration_services(compose_file_path)
+print("[ INFO ] Instalación finalizada.")

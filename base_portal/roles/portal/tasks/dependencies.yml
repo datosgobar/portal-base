@@ -43,3 +43,4 @@
     - pgadmin3
     - psmisc
     - gettext
+    - supervisor
