@@ -9,7 +9,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
     CKAN_VERSION=2.7.4 \
     CKAN_HOME=/usr/lib/ckan/default \
     CKAN_DATA=/var/lib/ckan \
-    CKAN_DIST_CONFIG=/var/lib/ckan/theme_config
+    CKAN_DIST_CONFIG=/var/lib/ckan/theme_config \
+    TZ=America/Argentina/Buenos_Aires
 
 RUN apt-get -y update && \
       apt-get install -y software-properties-common && \
