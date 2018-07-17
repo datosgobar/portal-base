@@ -70,8 +70,10 @@ psql -c "CREATE DATABASE $DATASTORE_DB OWNER $database_user;"
 "$current_dir/update_conf.sh" "ckan.datastore.write_url=postgresql://$database_user:$database_password@$PGHOST:$PGPORT/$DATASTORE_DB"
 "$current_dir/update_conf.sh" "ckan.datastore.read_url=postgresql://$datastore_user:$datastore_password@$PGHOST:$PGPORT/$DATASTORE_DB"
 "$current_dir/update_conf.sh" "beaker.session.secret=$beaker_session_secret"
-# Create datastore role and database
 
+# Create datastore role and database
 "$current_dir/paster.sh" --plugin=ckan db init
 "$current_dir/paster.sh" --plugin=ckan datastore set-permissions| psql --set ON_ERROR_STOP=1
 "$current_dir/paster.sh" --plugin=ckanext-harvest harvester initdb
+
+"$current_dir/update_data_json_and_catalog_xlsx.sh"
