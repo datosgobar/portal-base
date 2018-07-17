@@ -77,6 +77,7 @@
     - {src: run_update_tracking.sh.j2, dest: run_update_tracking.sh}
     - {src: start_rebuild_cron.sh.j2, dest: start_rebuild_cron.sh}
     - {src: sync_rebuild_tasks.sh.j2, dest: sync_rebuild_tasks.sh}
+    - {src: update_data_json_and_catalog_xlsx.sh.j2, dest: update_data_json_and_catalog_xlsx.sh}
 
 - name: Add update scripts
   template:

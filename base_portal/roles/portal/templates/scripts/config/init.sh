@@ -76,5 +76,4 @@ psql -c "CREATE DATABASE $DATASTORE_DB OWNER $database_user;"
 "$current_dir/paster.sh" --plugin=ckan datastore set-permissions| psql --set ON_ERROR_STOP=1
 "$current_dir/paster.sh" --plugin=ckanext-harvest harvester initdb
 
-"$current_dir/paster.sh" --plugin=ckanext-gobar-theme generate-data-json
-"$current_dir/paster.sh" --plugin=ckanext-gobar-theme generate-catalog-xlsx
+"$current_dir/update_data_json_and_catalog_xlsx.sh"
