@@ -86,6 +86,7 @@
   with_items:
     - 0001_fix_emails.sh
     - 0002_add_google_analytics_config.sh
+    - 0003_fix_flask_version.sh
 
 
 - name: Add tests scripts

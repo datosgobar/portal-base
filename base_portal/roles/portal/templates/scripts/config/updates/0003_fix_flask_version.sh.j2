@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Según un issue reportado en el Github de ckan/datapusher la versión de Flask debe ser no mayor a 0.12
+# Ver https://github.com/ckan/datapusher/issues/165
+# En esta migración intentamos detectar el error reportado (`ImportError: No module named ext.login`) y en ese caso instalar
+# Flask==0.12 en el virtualenv de datapusher.
+
+/usr/lib/ckan/datapusher/bin/datapusher -h 2> /tmp/0003_pipe
+grep "ImportError: No module named ext.login" /tmp/0003_pipe &> /dev/null
+if [ $? == 0 ]; then
+    echo "Error detectado en el datapusher, instalando Flask==0.12"
+    /usr/lib/ckan/datapusher/bin/pip install -U Flask==0.12
+    rm -f /tmp/0003_pipe
+else
+    echo "Versión compatible de Flask detectada."
+fi
