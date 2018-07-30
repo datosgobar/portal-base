@@ -2280,6 +2280,11 @@ my.Map = Backbone.View.extend({
   //
   _setupMap: function(){
     var self = this;
+
+    if (!this.$map) {
+      return;
+    }
+
     this.map = new L.Map(this.$map.get(0));
 
     // var mapUrl = "//stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.jpg";
