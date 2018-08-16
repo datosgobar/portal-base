@@ -5,3 +5,6 @@ CONFIG_FILE="{{ CKAN_CONFIG }}/{{ CKAN_CONFIG_FILE }}"
 . {{ CKAN_HOME }}/bin/activate
 {{ CKAN_HOME }}/bin/paster --plugin=ckanext-gobar-theme generate-data-json --config="$CONFIG_FILE"
 {{ CKAN_HOME }}/bin/paster --plugin=ckanext-gobar-theme generate-catalog-xlsx --config="$CONFIG_FILE"
+
+chwon www-data:www-data /var/lib/ckan/theme_config/datajson_cache.json
+chwon www-data:www-data /var/lib/ckan/theme_config/catalog.xlsx
