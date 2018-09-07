@@ -1,0 +1,8 @@
+; ========================================================
+; Supervisor configuration for Andino
+; ========================================================
+
+[program:cron]
+command = cron -f -L 15
+autostart=true
+autorestart=true

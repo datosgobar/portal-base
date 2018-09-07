@@ -24,7 +24,13 @@
     dest: "{{ CKAN_CONFIG }}/{{ CKAN_CONFIG_FILE }}"
 
 
-- name: Configure supervisor
+- name: Configure andino supervisor
+  template:
+    src: ckan/supervisor-andino.conf.j2
+    dest: "/etc/supervisor/conf.d/supervisor-andino.conf"
+
+
+- name: Configure ckan workers
   template:
     src: ckan/supervisor-ckan-worker.conf.j2
     dest: "/etc/supervisor/conf.d/supervisor-ckan-worker.conf"
