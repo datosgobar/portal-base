@@ -17,18 +17,15 @@
     regexp: "^ErrorLog.*"
     line: ErrorLog /proc/self/fd/1
 
-
 - name: Configure CKAN
   template:
     src: ckan/production.ini.j2
     dest: "{{ CKAN_CONFIG }}/{{ CKAN_CONFIG_FILE }}"
 
-
 - name: Configure andino supervisor
   template:
     src: ckan/supervisor-andino.conf.j2
     dest: "/etc/supervisor/conf.d/supervisor-andino.conf"
-
 
 - name: Configure ckan workers
   template:
@@ -47,6 +44,13 @@
   copy:
     src: "recline/recline.js"
     dest: "{{ CKAN_HOME }}/src/ckan/ckanext/reclineview/theme/public/vendor/recline/recline.js"
+
+- name: Add crons
+  template:
+    src: "scripts/crontab/{{ item.src }}"
+    dest: "/etc/cron/conf.d/{{ item.dest }}"
+  with_items:
+    - {src: andino-crontab.j2, dest: "andino-crontab"}
 
 - name: Add user configuration scripts
   template:
@@ -84,6 +88,7 @@
     - {src: start_rebuild_cron.sh.j2, dest: start_rebuild_cron.sh}
     - {src: sync_rebuild_tasks.sh.j2, dest: sync_rebuild_tasks.sh}
     - {src: update_data_json_and_catalog_xlsx.sh.j2, dest: update_data_json_and_catalog_xlsx.sh}
+    - {src: clean_datastore.sh.j2, dest: clean_datastore.sh}
 
 - name: Add update scripts
   template:
