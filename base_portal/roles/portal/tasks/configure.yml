@@ -48,7 +48,7 @@
 - name: Add crons
   template:
     src: "scripts/crontab/{{ item.src }}"
-    dest: "/etc/cron/conf.d/{{ item.dest }}"
+    dest: "/var/spool/cron/crontabs/{{ item.dest }}"
   with_items:
     - {src: andino-crontab.j2, dest: "andino-crontab"}
 
