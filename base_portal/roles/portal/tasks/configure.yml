@@ -89,6 +89,7 @@
     - {src: sync_rebuild_tasks.sh.j2, dest: sync_rebuild_tasks.sh}
     - {src: update_data_json_and_catalog_xlsx.sh.j2, dest: update_data_json_and_catalog_xlsx.sh}
     - {src: clean_datastore.sh.j2, dest: clean_datastore.sh}
+    - {src: update_datastore.sh.j2, dest: update_datastore.sh}
 
 - name: Add update scripts
   template:
