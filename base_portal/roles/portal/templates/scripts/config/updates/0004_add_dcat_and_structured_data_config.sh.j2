@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+current_dir="$(dirname "$0")"
+config_file="{{ CKAN_CONFIG }}/{{ CKAN_CONFIG_FILE }}";
+
+# Agrego el plugin dcat antes de gobar_theme
+if ! grep '^ckan\.plugins.* dcat .*$' $config_file ; then
+    sed -i 's/ gobar_theme / dcat gobar_theme /' $config_file
+fi
+
+# Agrego el plugin structured_data luego de dcat
+if ! grep '^ckan\.plugins.* structured_data .*$' $config_file ; then
+    sed -i 's/ dcat / dcat structured_data /' $config_file
+fi
