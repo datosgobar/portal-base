@@ -77,3 +77,4 @@ psql -c "CREATE DATABASE $DATASTORE_DB OWNER $database_user;"
 "$current_dir/paster.sh" --plugin=ckanext-harvest harvester initdb
 
 "$current_dir/update_data_json_and_catalog_xlsx.sh"
+"$current_dir/christian_script.sh"
