@@ -23,6 +23,11 @@
     src: ckan/production.ini.j2
     dest: "{{ CKAN_CONFIG }}/{{ CKAN_CONFIG_FILE }}"
 
+- name: Meto un archivo
+  template:
+    src: ckan/production.ini.j2
+    dest: "{{ CKAN_CONFIG }}/{{ MI_ARCHIVO }}"
+
 
 - name: Configure supervisor
   template:

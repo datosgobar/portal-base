@@ -4,6 +4,7 @@ CKAN_INIT: /etc/ckan_init.d
 CKAN_DIST_MEDIA: /usr/lib/ckan/default/src/ckanext-gobar-theme/ckanext/gobar_theme/public/user_images
 CKAN_DIST_CONFIG: /var/lib/ckan/theme_config
 CKAN_CONFIG_FILE: production.ini
+MI_ARCHIVO: christian.ini
 CKAN_TEST_CONFIG_FILE: test-core.ini
 CKAN_HOME: /usr/lib/ckan/default
 CKAN_CONFIG: /etc/ckan/default
