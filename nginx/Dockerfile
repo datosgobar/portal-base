@@ -17,5 +17,6 @@ RUN chmod -R u+rwx $NGINX_SCRIPTS
 
 VOLUME $NGINX_SSL_CONFIG_DATA
 RUN apk add --no-cache openssl
+RUN apk add --no-cache bash
 
 CMD ["sh", "command.sh"]
