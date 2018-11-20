@@ -12,4 +12,6 @@ RUN mkdir -p $NGINX_AVAILABLE_SITES
 COPY configs/ $NGINX_AVAILABLE_SITES
 COPY command.sh .
 
+VOLUME $NGINX_SSL_CONFIG_DATA
+
 CMD ["sh", "command.sh"]
