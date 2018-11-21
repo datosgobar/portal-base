@@ -2,12 +2,18 @@
 set -e;
 
 rm -f /etc/nginx/conf.d/default.conf;
-if [[ -n "$NGINX_CONFIG_FILE" ]]; then
-    echo "Using '$NGINX_CONFIG_FILE' configuration"
-    ln -s "$NGINX_AVAILABLE_SITES/$NGINX_CONFIG_FILE" /etc/nginx/conf.d/default.conf;
+
+if [ -d "$NGINX_AVAILABLE_SITES" ] ; then
+    ln -s "$NGINX_AVAILABLE_SITES"/"$NGINX_SSL_CONFIG_FILE" /etc/nginx/conf.d/default.conf;
+    openssl dhparam 2048 -out $NGINX_SSL_CONFIG_DATA/andino_dhparam.pem
 else
-    echo "Using '$NGINX_DEFAULT_CONFIG_FILE' default configuration"
-    ln -s "$NGINX_AVAILABLE_SITES/$NGINX_DEFAULT_CONFIG_FILE" /etc/nginx/conf.d/default.conf;
+    if [[ -n "$NGINX_CONFIG_FILE" ]]; then
+        echo "Using '$NGINX_CONFIG_FILE' configuration"
+        ln -s "$NGINX_AVAILABLE_SITES/$NGINX_CONFIG_FILE" /etc/nginx/conf.d/default.conf;
+    else
+        echo "Using '$NGINX_DEFAULT_CONFIG_FILE' default configuration"
+        ln -s "$NGINX_AVAILABLE_SITES/$NGINX_DEFAULT_CONFIG_FILE" /etc/nginx/conf.d/default.conf;
+    fi
 fi
 
 # Configure max_size cache option
