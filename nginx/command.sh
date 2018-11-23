@@ -8,7 +8,8 @@ if [[ -n "$NGINX_CONFIG_FILE" \
     && -f "$NGINX_SSL_CONFIG_DATA/andino.crt" ]]; then
     echo "Using '$NGINX_CONFIG_FILE' configuration"
     ln -s "$NGINX_AVAILABLE_SITES/$NGINX_CONFIG_FILE" /etc/nginx/conf.d/default.conf;
-    openssl dhparam 2048 -out $NGINX_SSL_CONFIG_DATA/andino_dhparam.pem
+    openssl dhparam 2048 -out $NGINX_SSL_CONFIG_DATA/andino_dhparam.pem;
+    sed -i "s/SSL_PORT_NUMBER/${NGINX_HOST_SSL_PORT}/g" /etc/nginx/conf.d/default.conf
 else
     echo "Using '$NGINX_DEFAULT_CONFIG_FILE' default configuration"
     ln -s "$NGINX_AVAILABLE_SITES/$NGINX_DEFAULT_CONFIG_FILE" /etc/nginx/conf.d/default.conf;

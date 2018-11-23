@@ -1,10 +1,12 @@
 #!/bin/bash
 
 cd {{ CKAN_HOME }}
-. bin/activate
 cd src/ckan
-pip install -r requirements.txt --allow-all-external
-pip install -r dev-requirements.txt --allow-all-external
+pip install -r requirements.txt
+pip install -r dev-requirements.txt
+pip install --ignore-installed mock bs4 httpretty pycodestyle factory
+andino_test_core=$(find / -name test-core.ini | grep gobar_theme)
+echo "Path del test-core.ini de portal-andino-theme: $andino_test_core"
 python setup.py develop
 export PGUSER=ckan
 export PGPASS=ckan
@@ -14,12 +16,7 @@ psql -c "CREATE USER ckan_default WITH PASSWORD 'pass';"
 psql -c "CREATE USER datastore_default WITH PASSWORD 'pass';"
 psql -c 'CREATE DATABASE ckan_test WITH OWNER ckan_default;'
 psql -c 'CREATE DATABASE datastore_test WITH OWNER ckan_default;'
-sed -i -e 's/sqlalchemy.url.*/sqlalchemy.url = postgresql:\/\/ckan_default:pass@db:5432\/ckan_test/' test-core.ini
-sed -i -e 's/.*datastore.read_url.*/ckan.datastore.read_url = postgresql:\/\/datastore_default:pass@db\/datastore_test/' test-core.ini
-sed -i -e 's/.*datastore.write_url.*/ckan.datastore.write_url = postgresql:\/\/ckan_default:pass@db\/datastore_test/' test-core.ini
-sed -i -e 's/.*datastore.write_url.*/ckan.datastore.write_url = postgresql:\/\/ckan_default:pass@db\/datastore_test/' test-core.ini
-sed -i -e 's/solr_url.*/solr_url = http:\/\/localhost:8983\/solr/' test-core.ini
 
-paster datastore -c test-core.ini set-permissions | psql
+paster datastore -c $andino_test_core set-permissions | psql
 cd {{ CKAN_HOME }}/src/ckan
-paster db init -c test-core.ini
+paster db init -c $andino_test_core
