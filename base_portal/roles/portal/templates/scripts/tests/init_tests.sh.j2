@@ -8,10 +8,10 @@ pip install -r dev-requirements.txt
 pip install -r requirement-setuptools.txt
 pip install --ignore-installed mock bs4 httpretty pycodestyle factory nose
 echo "Lugares con requirements.txt: $(find / -name requirements.txt)"
-pip install -r $CKAN_HOME/src/ckanext-gobar-theme/requirements.txt
-pip install -r $CKAN_HOME/src/ckanext-dcat/requirements.txt
+pip install -r {{ CKAN_HOME }}/src/ckanext-gobar-theme/requirements.txt
+pip install -r {{ CKAN_HOME }}/src/ckanext-dcat/requirements.txt
 echo "Instalo dcat a mano"
--e git+https://github.com/ckan/ckanext-dcat.git@9709ab5771856303e5ac80bd0f7759ab47d99678#egg=ckanext-dcat
+pip install -e git+https://github.com/ckan/ckanext-dcat.git@9709ab5771856303e5ac80bd0f7759ab47d99678#egg=ckanext-dcat
 andino_test_core=$(find / -name test-core.ini | grep gobar_theme)
 echo "Path del test-core.ini de portal-andino-theme: $andino_test_core"
 python setup.py develop
@@ -24,7 +24,8 @@ psql -c "CREATE USER datastore_default WITH PASSWORD 'pass';"
 psql -c 'CREATE DATABASE ckan_test WITH OWNER ckan_default;'
 psql -c 'CREATE DATABASE datastore_test WITH OWNER ckan_default;'
 
-echo "Corriendo inicialización con paster"
+echo "Corriendo inicialización del datastore"
 paster datastore -c $andino_test_core set-permissions | psql
 cd {{ CKAN_HOME }}/src/ckan
+echo "Corriendo inicialización de la base de datos"
 paster db init -c $andino_test_core
