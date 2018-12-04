@@ -88,6 +88,7 @@
     - 0002_add_google_analytics_config.sh
     - 0003_fix_flask_version.sh
     - 0004_add_dcat_and_structured_data_config.sh
+    - 0005_add_series_api_uri_default_value.sh
 
 
 - name: Add tests scripts

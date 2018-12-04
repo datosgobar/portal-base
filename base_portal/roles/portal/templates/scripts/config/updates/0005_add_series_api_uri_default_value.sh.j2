@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+config_file="{{ CKAN_CONFIG }}/{{ CKAN_CONFIG_FILE }}";
+
+if ! grep -q "seriestiempoarexplorer.default_series_api_uri" "$config_file"; then
+    var=$(grep -n '\[app:main\]' $config_file | awk -F  ":" '{print $1}')
+    let "var=var+1"
+    sed -i "${var}i    seriestiempoarexplorer.default_series_api_uri = https://apis.datos.gob.ar/series/api" $config_file
+fi
