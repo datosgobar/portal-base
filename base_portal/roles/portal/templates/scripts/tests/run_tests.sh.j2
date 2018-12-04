@@ -1,7 +1,9 @@
 #!/bin/bash
 
+echo "Corriendo tests de CKAN"
 cd {{ CKAN_HOME }}/src/ckan
 pip install --ignore-installed mock bs4 httpretty pycodestyle factory mockredispy nose
 pip freeze
+echo "Corriendo nosetests"
 nosetests --ckan --reset-db --with-pylons=$(find / -name test-core.ini | grep gobar_theme) --nologcapture --with-coverage --cover-package=ckan --cover-package=ckanext ckan ckanext
 
