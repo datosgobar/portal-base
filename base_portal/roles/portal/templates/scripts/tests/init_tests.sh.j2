@@ -6,7 +6,7 @@ source ../../bin/activate
 pip install -r requirements.txt
 pip install -r dev-requirements.txt
 pip install -r requirement-setuptools.txt
-pip install --ignore-installed mock bs4 httpretty pycodestyle factory
+pip install --ignore-installed mock bs4 httpretty pycodestyle factory nosetests
 andino_test_core=$(find / -name test-core.ini | grep gobar_theme)
 echo "Path del test-core.ini de portal-andino-theme: $andino_test_core"
 python setup.py develop
