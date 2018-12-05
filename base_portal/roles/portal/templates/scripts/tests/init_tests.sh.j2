@@ -8,15 +8,6 @@ pip install -r dev-requirements.txt
 pip install -r requirement-setuptools.txt
 pip install --ignore-installed mock bs4 httpretty pycodestyle factory nose
 echo "Lugares con requirements.txt: $(find / -name requirements.txt)"
-pip install -r {{ CKAN_HOME }}/src/ckanext-gobar-theme/requirements.txt
-pip install -r {{ CKAN_HOME }}/src/ckanext-dcat/requirements.txt
-echo "Instalo dcat a mano"
-pip install -e git+https://github.com/ckan/ckanext-dcat.git@9709ab5771856303e5ac80bd0f7759ab47d99678#egg=ckanext-dcat
-pip install -e git+https://github.com/datosgobar/ckanext-seriestiempoarexplorer.git@0.1.7#egg=ckanext-seriestiempoarexplorer
-setup_file_path=$(find / -name setup.py | grep gobar-theme)
-echo "Path del setup.py de portal-andino-theme: $setup_file_path"
-chmod u+x $setup_file_path
-python $setup_file_path develop
 andino_test_core=$(find / -name test-core.ini | grep gobar_theme)
 echo "Path del test-core.ini de portal-andino-theme: $andino_test_core"
 export PGUSER=ckan
@@ -30,6 +21,7 @@ psql -c 'CREATE DATABASE datastore_test WITH OWNER ckan_default;'
 
 sed -i 's/datastore dcat structured_data seriestiempoarexplorer gobar_theme googleanalytics//g' $andino_test_core
 sed -i 's/redis:\/\/localhost:6379\/1/redis:\/\/redis:6379\/0/g' $andino_test_core
+sed -i 's/http:\/\/solr:8983\/solr\/ckan/http:\/\/127.0.0.1:8983\/solr\/ckan/g' $andino_test_core
 sed -i 's/http:\/\/example.com/http:\/\/test.ckan.net/g' $andino_test_core
 echo "Corriendo inicialización del datastore"
 paster datastore -c $andino_test_core set-permissions | psql
