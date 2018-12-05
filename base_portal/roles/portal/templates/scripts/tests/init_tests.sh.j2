@@ -32,6 +32,5 @@ psql -c 'CREATE DATABASE datastore_test WITH OWNER ckan_default;'
 # paster datastore -c $andino_test_core set-permissions | psql
 cd {{ CKAN_HOME }}/src/ckan
 echo "Corriendo inicialización de la base de datos"
-ckan_test_core=$(find / -name test-core.ini | grep /src/ckan/)
-echo "Path del test-core.ini de ckan: $ckan_test_core"
-paster db init -c $ckan_test_core
+sed -i 's/datastore dcat structured_data seriestiempoarexplorer gobar_theme googleanalytics//g' $andino_test_core
+paster db init -c $andino_test_core
