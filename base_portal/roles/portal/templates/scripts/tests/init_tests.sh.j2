@@ -13,7 +13,7 @@ pip install -r {{ CKAN_HOME }}/src/ckanext-dcat/requirements.txt
 echo "Instalo dcat a mano"
 pip install -e git+https://github.com/ckan/ckanext-dcat.git@9709ab5771856303e5ac80bd0f7759ab47d99678#egg=ckanext-dcat
 pip install -e git+https://github.com/datosgobar/ckanext-seriestiempoarexplorer.git@0.1.7#egg=ckanext-seriestiempoarexplorer
-$(find / -name setup.py | grep gobar-theme) develop
+sudo $(find / -name setup.py | grep gobar-theme) develop
 andino_test_core=$(find / -name test-core.ini | grep gobar_theme)
 echo "Path del test-core.ini de portal-andino-theme: $andino_test_core"
 python setup.py develop
