@@ -14,11 +14,11 @@ echo "Instalo dcat a mano"
 pip install -e git+https://github.com/ckan/ckanext-dcat.git@9709ab5771856303e5ac80bd0f7759ab47d99678#egg=ckanext-dcat
 pip install -e git+https://github.com/datosgobar/ckanext-seriestiempoarexplorer.git@0.1.7#egg=ckanext-seriestiempoarexplorer
 setup_file_path=$(find / -name setup.py | grep gobar-theme)
+echo "Path del setup.py de portal-andino-theme: $setup_file_path"
 chmod u+x $setup_file_path
-python setup_file_path develop
+python $setup_file_path develop
 andino_test_core=$(find / -name test-core.ini | grep gobar_theme)
 echo "Path del test-core.ini de portal-andino-theme: $andino_test_core"
-python setup.py develop
 export PGUSER=ckan
 export PGPASS=ckan
 export PGHOST=db
