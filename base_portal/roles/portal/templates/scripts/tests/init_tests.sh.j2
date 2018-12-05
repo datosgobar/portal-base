@@ -28,8 +28,10 @@ psql -c "CREATE USER datastore_default WITH PASSWORD 'pass';"
 psql -c 'CREATE DATABASE ckan_test WITH OWNER ckan_default;'
 psql -c 'CREATE DATABASE datastore_test WITH OWNER ckan_default;'
 
-echo "Corriendo inicialización del datastore"
-paster datastore -c $andino_test_core set-permissions | psql
+# echo "Corriendo inicialización del datastore"
+# paster datastore -c $andino_test_core set-permissions | psql
 cd {{ CKAN_HOME }}/src/ckan
 echo "Corriendo inicialización de la base de datos"
-paster db init -c $andino_test_core
+ckan_test_core=$(find / -name test-core.ini | grep /src/ckan/)
+echo "Path del test-core.ini de ckan: $ckan_test_core"
+paster db init -c $ckan_test_core
