@@ -102,3 +102,9 @@
   with_items:
     - "{{ CKAN_DIST_CONFIG }}"
     - "{{ DEFAULT_CKAN_DATA }}"
+
+- name: Upgrade Flask
+  pip:
+    name: Flask
+    virtualenv: "{{ DATAPUSHER_HOME }}"
+    version: 0.12

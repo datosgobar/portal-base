@@ -6,6 +6,7 @@ CKAN_DIST_CONFIG: /var/lib/ckan/theme_config
 CKAN_CONFIG_FILE: production.ini
 CKAN_TEST_CONFIG_FILE: test-core.ini
 CKAN_HOME: /usr/lib/ckan/default
+DATAPUSHER_HOME: /usr/lib/ckan/datapusher
 CKAN_CONFIG: /etc/ckan/default
 CKAN_HARVEST_GCF: /var/log/ckan/std
 UPDATE_DIR: "{{ CKAN_INIT }}/updates/"
