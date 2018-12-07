@@ -8,6 +8,7 @@ if [[ -n "$NGINX_CONFIG_FILE" \
     && -f "$NGINX_SSL_CONFIG_DATA/andino.crt" ]]; then
     echo "Using '$NGINX_CONFIG_FILE' configuration"
     ln -s "$NGINX_AVAILABLE_SITES/$NGINX_CONFIG_FILE" /etc/nginx/conf.d/default.conf;
+    sed -i "s/SSL_PORT_NUMBER/${NGINX_HOST_SSL_PORT}/g" /etc/nginx/conf.d/default.conf
     if ! [ -f "$NGINX_SSL_CONFIG_DATA/andino_dhparam.pem" ]
     then
         echo "Creando archivo de DH params" ;
