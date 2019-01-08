@@ -23,7 +23,7 @@ printf "Creating databases... "
 init_db
 printf "[OK]"
 . {{ CKAN_HOME }}/bin/activate
-{{ CKAN_HOME }}/bin/nosetests --ckan --reset-db --with-pylons="{{ CKAN_CONFIG }}/test-core.ini" ckan
+{{ CKAN_HOME }}/bin/nosetests --ckan --reset-db --with-pylons="$andino_test_core" ckan
 printf "Dropping databases... "
 drop_db
 printf "[OK]"

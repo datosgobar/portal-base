@@ -2,4 +2,5 @@
 
 cd {{ CKAN_HOME }}
 source bin/activate
+pip install --ignore-installed mock bs4 httpretty pycodestyle factory
 mocha-phantomjs http://localhost:5000/base/test/index.html

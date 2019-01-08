@@ -1,12 +1,12 @@
 #!/bin/bash
+echo "Preparando los tests de CKAN"
 cd {{ CKAN_INIT }}/tests/
 ./run_solr4.sh
 ./init_tests.sh
 
 ./run_tests.sh
 cd {{ CKAN_HOME }}
-source bin/activate
-bin/paster serve src/ckan/test-core.ini &
+bin/paster serve $andino_test_core &
 sleep 5
 cd {{ CKAN_INIT }}/tests/
 ./run_testsjs.sh
