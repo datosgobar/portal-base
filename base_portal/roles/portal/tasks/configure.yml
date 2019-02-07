@@ -67,11 +67,6 @@
   with_items:
     - {src: start_ckan.sh.j2, dest: start_ckan.sh}
     - {src: run_andino.sh, dest: run_andino.sh}
-    - {src: run_gather_consumer.sh.j2, dest: run_gather_consumer.sh}
-    - {src: run_fetch_consumer.sh.j2, dest: run_fetch_consumer.sh}
-    - {src: run_harvest.sh.j2, dest: run_harvest.sh}
-    - {src: start_cron.sh.j2, dest: start_cron.sh}
-    - {src: run_clean_harvest.sh.j2, dest: run_clean_harvest.sh}
     - {src: run_tests.sh.j2, dest: run_tests.sh}
     - {src: run_rebuild_search.sh.j2, dest: run_rebuild_search.sh}
     - {src: run_update_tracking.sh.j2, dest: run_update_tracking.sh}
