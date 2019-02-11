@@ -77,10 +77,13 @@
     requirements: "{{ CKAN_HOME }}/src/ckanext-harvest/pip-requirements.txt"
     virtualenv: "{{ CKAN_HOME }}"
 
-- name: Create dist config directories
+- name: Create harvest and other directories
   file:
     state: directory
-    dest: "{{ CKAN_DIST_CONFIG }}"
+    dest: "{{ item }}"
+  with_items:
+    - "{{ CKAN_DIST_CONFIG }}"
+    - "{{ CKAN_HARVEST_GCF }}"
 
 - name: Change owners
   file:

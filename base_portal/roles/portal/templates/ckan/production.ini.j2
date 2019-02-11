@@ -108,8 +108,7 @@ ckan.search.solr_commit = true
 #       Add ``datapusher`` to enable DataPusher
 #		Add ``resource_proxy`` to enable resorce proxying and get around the
 #		same origin policy
-ckan.plugins = datajson stats text_view image_view recline_view hierarchy_display hierarchy_form dcat structured_data gobar_theme datastore datapusher seriestiempoarexplorer googleanalytics
-# googleanalytics debe ser el último
+ckan.plugins = datajson_harvest datajson harvest ckan_harvester stats text_view image_view recline_view hierarchy_display hierarchy_form dcat structured_data gobar_theme datastore datapusher seriestiempoarexplorer googleanalytics# googleanalytics debe ser el último
 
 # Define which views should be created by default
 # (plugins must be loaded in ckan.plugins)
@@ -190,6 +189,10 @@ smtp.mail_from = administrador@example.com
 
 ## Redis
 ckan.redis.url = redis://{{ DEFAULT_REDIS_HOST }}:{{ DEFAULT_REDIS_PORT }}/{{ DEFAULT_REDIS_DB }}
+ckan.harvest.mq.type = redis
+ckan.harvest.mq.hostname = {{ DEFAULT_REDIS_HOST }}
+ckan.harvest.mq.port = {{ DEFAULT_REDIS_PORT }}
+ckan.harvest.mq.redis_db = {{ DEFAULT_REDIS_DB }}
 
 ## Google Analytics
 googleanalytics.id = UA-101681828-1
