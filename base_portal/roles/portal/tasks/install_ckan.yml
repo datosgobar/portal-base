@@ -71,8 +71,13 @@
   pip:
     requirements: "{{ CKAN_HOME }}/src/ckanext-datajson/pip-requirements.txt"
     virtualenv: "{{ CKAN_HOME }}"
-    
-- name: Create harvest and other directories
+
+- name: install Harvest requirements
+  pip:
+    requirements: "{{ CKAN_HOME }}/src/ckanext-harvest/pip-requirements.txt"
+    virtualenv: "{{ CKAN_HOME }}"
+
+- name: Create dist config directories
   file:
     state: directory
     dest: "{{ CKAN_DIST_CONFIG }}"
