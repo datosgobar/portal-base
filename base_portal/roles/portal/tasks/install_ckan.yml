@@ -65,19 +65,6 @@
       - "--editable=git+https://github.com/datagovuk/ckanext-hierarchy.git@3f2a258a46d5577c449678bf83f0ec1c6b6e7795#egg=ckanext-hierarchy"
     virtualenv: "{{ CKAN_HOME }}"
 
-- name: install Harvest requirements
-  pip:
-    requirements: "{{ CKAN_HOME }}/src/ckanext-harvest/pip-requirements.txt"
-    virtualenv: "{{ CKAN_HOME }}"
-
-- name: Create harvest and other directories
-  file:
-    state: directory
-    dest: "{{ item }}"
-  with_items:
-    - "{{ CKAN_DIST_CONFIG }}"
-    - "{{ CKAN_HARVEST_GCF }}"
-
 - name: Change owners
   file:
     owner: www-data
