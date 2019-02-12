@@ -8,6 +8,7 @@ CKAN_TEST_CONFIG_FILE: test-core.ini
 CKAN_HOME: /usr/lib/ckan/default
 DATAPUSHER_HOME: /usr/lib/ckan/datapusher
 CKAN_CONFIG: /etc/ckan/default
+CKAN_HARVEST_GCF: /var/log/ckan/std
 UPDATE_DIR: "{{ CKAN_INIT }}/updates/"
 
 DEFAULT_CKAN_DATA: /var/lib/ckan
