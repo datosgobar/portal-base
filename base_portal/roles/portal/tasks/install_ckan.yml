@@ -70,9 +70,7 @@
 - name: Create theme_config directory
   file:
     state: directory
-    dest: "{{ item }}"
-  with_items:
-    - "{{ CKAN_DIST_CONFIG }}"
+    dest: "{{ CKAN_DIST_CONFIG }}"
 
 - name: Change owners
   file:
