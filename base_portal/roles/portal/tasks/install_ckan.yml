@@ -67,23 +67,10 @@
       - "--editable=git+https://github.com/datosgobar/ckanext-datajsonAR.git@v0.1.15#egg=ckanext-datajson"
     virtualenv: "{{ CKAN_HOME }}"
 
-- name: Install datajson AR requirements
-  pip:
-    requirements: "{{ CKAN_HOME }}/src/ckanext-datajson/pip-requirements.txt"
-    virtualenv: "{{ CKAN_HOME }}"
-
-- name: install Harvest requirements
-  pip:
-    requirements: "{{ CKAN_HOME }}/src/ckanext-harvest/pip-requirements.txt"
-    virtualenv: "{{ CKAN_HOME }}"
-
-- name: Create harvest and other directories
+- name: Create theme_config directory
   file:
     state: directory
-    dest: "{{ item }}"
-  with_items:
-    - "{{ CKAN_DIST_CONFIG }}"
-    - "{{ CKAN_HARVEST_GCF }}"
+    dest: "{{ CKAN_DIST_CONFIG }}"
 
 - name: Change owners
   file:

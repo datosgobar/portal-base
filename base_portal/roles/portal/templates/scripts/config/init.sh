@@ -74,6 +74,5 @@ psql -c "CREATE DATABASE $DATASTORE_DB OWNER $database_user;"
 # Create datastore role and database
 "$current_dir/paster.sh" --plugin=ckan db init
 "$current_dir/paster.sh" --plugin=ckan datastore set-permissions| psql --set ON_ERROR_STOP=1
-"$current_dir/paster.sh" --plugin=ckanext-harvest harvester initdb
 
 "$current_dir/update_data_json_and_catalog_xlsx.sh"

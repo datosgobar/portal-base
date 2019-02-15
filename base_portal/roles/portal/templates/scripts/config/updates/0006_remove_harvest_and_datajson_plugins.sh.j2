@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+
+config_file="{{ CKAN_CONFIG }}/{{ CKAN_CONFIG_FILE }}";
+
+var=$(grep -n 'ckan.plugins[[:space:]]*=' $config_file | awk -F  ":" '{print $1}');
+sed -i "${var} s/datajson_harvest//g; s/ckan_harvester//g" $config_file
+sed -i "${var} s/ckan_harvester//g" $config_file
+sed -i "${var} s/datajson//g" $config_file
+sed -i "${var} s/harvest//g" $config_file
