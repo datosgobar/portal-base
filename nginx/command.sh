@@ -22,6 +22,15 @@ else
     ln -s "$NGINX_AVAILABLE_SITES/$NGINX_DEFAULT_CONFIG_FILE" /etc/nginx/conf.d/default.conf;
 fi
 
+# Reemplazo el valor de 'client_max_body_size' con el límite impuesto en la instalación/actualización, sin afectar el
+# archivo si se levanta una instancia de desarrollo
+if ! [ -z "$FILE_SIZE_LIMIT" ]
+  then
+    echo "Tengo file size limit = client_max_body_size ${FILE_SIZE_LIMIT}M;"
+    sed -i '/client_max_body_size/c\    client_max_body_size '"$FILE_SIZE_LIMIT"'M;' /etc/nginx/conf.d/default.conf
+    cat /etc/nginx/conf.d/default.conf
+fi
+
 # Configure extended cache if specified
 if [ "$NGINX_EXTENDED_CACHE" = 'yes' ] ; then
     chmod -R u+rwx $NGINX_SCRIPTS ;
