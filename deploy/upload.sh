@@ -2,7 +2,7 @@
 
 set -ev
 
-branch="$BRANCH_TO_USE"
+branch="$TRAVIS_BRANCH"
 pattern="^[0-9.]+"
 
 if [ "$branch" == "master" ]; then
@@ -13,7 +13,6 @@ else
     tag="$branch"
 fi
 
-echo Using branch: "$branch", and tag: "$tag"
 image="datosgobar/portal-base:build"
 image_full_name="datosgobar/portal-base:$tag"
 docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASS";
