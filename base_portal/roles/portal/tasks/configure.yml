@@ -17,12 +17,15 @@
     regexp: "^ErrorLog.*"
     line: ErrorLog /proc/self/fd/1
 
-
 - name: Configure CKAN
   template:
     src: ckan/production.ini.j2
     dest: "{{ CKAN_CONFIG }}/{{ CKAN_CONFIG_FILE }}"
 
+- name: Add licenses JSON file
+  template:
+    src: ckan/licenses.json.j2
+    dest: "{{ CKAN_DIST_CONFIG }}/licenses.json"
 
 - name: Configure supervisor
   template:
@@ -86,7 +89,6 @@
     - 0005_add_series_api_uri_default_value.sh
     - 0006_remove_harvest_and_datajson_plugins.sh
 
-
 - name: Add tests scripts
   template:
     src: "scripts/tests/{{ item.src }}"
@@ -99,7 +101,6 @@
     - {src: run_testsjs.sh.j2, dest: run_testsjs.sh}
     - {src: run_solr4.sh.j2, dest: run_solr4.sh}
     - {src: run_all_tests.sh.j2, dest: run_all_tests.sh}
-
 
 - name: Copy default ckan config
   template:
