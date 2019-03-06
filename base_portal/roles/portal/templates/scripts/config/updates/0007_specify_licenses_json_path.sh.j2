@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+config_file="{{ CKAN_CONFIG }}/{{ CKAN_CONFIG_FILE }}";
+licenses_json_path=/app/roles/portal/templates/ckan/licenses.json.j2
+licenses_json_final_path={{ CKAN_DIST_CONFIG }}/licenses.json
+
+config_line=$(grep -n '#licenses_group_url' /etc/ckan/default/production.ini | awk -F  ":" '{print $1}')
+if [[ -z $config_line ]] ; then
+    cp $licenses_json_path $licenses_json_final_path
+    sed -i "${config_line}s|.*|licenses_group_url = file:///var/lib/ckan/theme_config/licenses.json|" $config_file
+fi
