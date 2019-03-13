@@ -40,6 +40,11 @@
     - {src: apache/apache.wsgi.j2, dest: "{{ CKAN_CONFIG }}/apache.wsgi"}
     - {src: ckan/datapusher.wsgi.j2, dest: /etc/ckan/datapusher.wsgi}
 
+- name: Replace Recline styles
+  copy:
+    src: "recline/recline.min.css"
+    dest: "{{ CKAN_HOME }}/src/ckan/ckanext/reclineview/theme/public/css/recline.min.css"
+
 - name: Replace TMS with IGN
   copy:
     src: "recline/recline.js"
