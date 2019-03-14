@@ -141,7 +141,7 @@ def check_previous_installation(base_path):
             raise Exception("[ ERROR ] No se encontró una instalación.")
 
 
-def post_update_commands(compose_path, crontab_content):
+def post_update_commands(compose_path):
     try:
         subprocess.check_call(
             ["docker-compose",
@@ -232,7 +232,7 @@ except subprocess.CalledProcessError:
     crontab_content = ""
 reload_application(compose_file_path)
 print("[ INFO ] Corriendo comandos post-instalación")
-post_update_commands(compose_file_path, crontab_content)
+post_update_commands(compose_file_path)
 restore_cron_jobs(crontab_content)
 print("[ INFO ] Reiniciando")
 restart_apps(compose_file_path)
