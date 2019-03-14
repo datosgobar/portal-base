@@ -197,10 +197,6 @@ def post_update_commands(compose_path, crontab_content):
         REBUILD_SEARCH_COMMAND,
     ])
 
-    if crontab_content:
-        subprocess.check_call('docker exec -it andino crontab -u www-data -l; {}  '
-                              '| crontab -u www-data -'.format(crontab_content), shell=True)
-
 
 def restart_apps(compose_path):
     subprocess.check_call([
@@ -209,6 +205,11 @@ def restart_apps(compose_path):
         compose_path,
         "restart",
     ])
+
+
+def restore_cron_jobs(crontab_content):
+    subprocess.check_call('docker exec -it andino crontab -u www-data -l; {}  '
+                          '| crontab -u www-data -'.format(crontab_content), shell=True)
 
 
 print("[ INFO ] Comprobando que docker esté instalado...")
@@ -232,6 +233,7 @@ except subprocess.CalledProcessError:
 reload_application(compose_file_path)
 print("[ INFO ] Corriendo comandos post-instalación")
 post_update_commands(compose_file_path, crontab_content)
+restore_cron_jobs(crontab_content)
 print("[ INFO ] Reiniciando")
 restart_apps(compose_file_path)
 print("[ INFO ] Listo.")
