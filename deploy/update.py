@@ -141,7 +141,7 @@ def check_previous_installation(base_path):
             raise Exception("[ ERROR ] No se encontró una instalación.")
 
 
-def post_update_commands(compose_path):
+def post_update_commands(compose_path, crontab_content):
     try:
         subprocess.check_call(
             ["docker-compose",
@@ -197,6 +197,10 @@ def post_update_commands(compose_path):
         REBUILD_SEARCH_COMMAND,
     ])
 
+    if crontab_content:
+        subprocess.check_call('docker exec -it andino crontab -u www-data -l; {}  '
+                              '| crontab -u www-data -'.format(crontab_content), shell=True)
+
 
 def restart_apps(compose_path):
     subprocess.check_call([
@@ -220,9 +224,14 @@ fix_env_file(directory)
 print("[ INFO ] Guardando base de datos...")
 backup_database(directory, compose_file_path)
 print("[ INFO ] Actualizando la aplicación")
+try:
+    crontab_content = subprocess.check_output('docker exec -it andino crontab -u www-data -l', shell=True).strip()
+except subprocess.CalledProcessError:
+    # No hay cronjobs para guardar
+    crontab_content = ""
 reload_application(compose_file_path)
 print("[ INFO ] Corriendo comandos post-instalación")
-post_update_commands(compose_file_path)
+post_update_commands(compose_file_path, crontab_content)
 print("[ INFO ] Reiniciando")
 restart_apps(compose_file_path)
 print("[ INFO ] Listo.")
