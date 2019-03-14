@@ -208,8 +208,12 @@ def restart_apps(compose_path):
 
 
 def restore_cron_jobs(crontab_content):
-    subprocess.check_call('docker exec -it andino crontab -u www-data -l; {}  '
-                          '| crontab -u www-data -'.format(crontab_content), shell=True)
+    try:
+        subprocess.check_call('docker exec -it andino crontab -u www-data -l; {}  '
+                              '| crontab -u www-data -'.format(crontab_content), shell=True)
+    except subprocess.CalledProcessError:
+        # Error durante un deploy
+        pass
 
 
 print("[ INFO ] Comprobando que docker esté instalado...")
