@@ -207,6 +207,11 @@ def restart_apps(compose_path):
     ])
 
 
+def restore_cron_jobs(crontab_content):
+    subprocess.check_call('docker exec -it andino crontab -u www-data -l; {}  '
+                          '| crontab -u www-data -'.format(crontab_content), shell=True)
+
+
 print("[ INFO ] Comprobando que docker esté instalado...")
 check_docker()
 print("[ INFO ] Comprobando que docker-compose este instalado...")
@@ -220,9 +225,15 @@ fix_env_file(directory)
 print("[ INFO ] Guardando base de datos...")
 backup_database(directory, compose_file_path)
 print("[ INFO ] Actualizando la aplicación")
+try:
+    crontab_content = subprocess.check_output('docker exec -it andino crontab -u www-data -l', shell=True).strip()
+except subprocess.CalledProcessError:
+    # No hay cronjobs para guardar
+    crontab_content = ""
 reload_application(compose_file_path)
 print("[ INFO ] Corriendo comandos post-instalación")
 post_update_commands(compose_file_path)
+restore_cron_jobs(crontab_content)
 print("[ INFO ] Reiniciando")
 restart_apps(compose_file_path)
 print("[ INFO ] Listo.")
