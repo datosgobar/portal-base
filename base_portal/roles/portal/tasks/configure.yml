@@ -27,6 +27,11 @@
     src: ckan/licenses.json.j2
     dest: "{{ CKAN_DIST_CONFIG }}/licenses.json"
 
+- name: Add units JSON file
+  template:
+    src: ckan/units.json.j2
+    dest: "{{ CKAN_DIST_CONFIG }}/units.json"
+
 - name: Configure supervisor
   template:
     src: ckan/supervisor-ckan-worker.conf.j2
