@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+units_json_path=/app/roles/portal/templates/ckan/units.json.j2
+units_json_final_path={{ CKAN_DIST_CONFIG }}/units.json
+config_file="{{ CKAN_CONFIG }}/{{ CKAN_CONFIG_FILE }}";
+
+if ! grep -q "units_url" "$config_file"; then
+    var=$(grep -n '\[app:main\]' $config_file | awk -F  ":" '{print $1}')
+    let "var=var+1"
+    sed -i "${var}i    units_url = $units_json_final_path" $config_file
+    cp $units_json_path $units_json_final_path
+fi
