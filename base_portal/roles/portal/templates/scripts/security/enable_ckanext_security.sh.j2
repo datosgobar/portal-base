@@ -9,8 +9,8 @@ fi
 . /usr/lib/ckan/default/bin/activate
 pip install -e 'git+https://github.com/data-govt-nz/ckanext-security.git#egg=ckanext-security==1.0.1'
 cd /usr/lib/ckan/default/src/ckan
-git remote add -f data-govt-nz https://github.com/data-govt-nz/ckan.git
-git cherry-pick 74f78865b8825c91d1dfe6b189228f4b975610a3
+git remote add -f data-govt-nz https://github.com/data-govt-nz/ckan.git 2> /dev/null
+git cherry-pick 74f78865b8825c91d1dfe6b189228f4b975610a3 2> /dev/null
 cd -
 
 
