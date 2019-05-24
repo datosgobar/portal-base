@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+config_file="/etc/ckan/default/production.ini";
+
+if grep '## ckanext-security' $config_file ; then
+    exit 0
+fi
+
+. /usr/lib/ckan/default/bin/activate
+pip install -e 'git+https://github.com/data-govt-nz/ckanext-security.git#egg=ckanext-security==1.0.1'
+cd /usr/lib/ckan/default/src/ckan
+git remote add -f data-govt-nz https://github.com/data-govt-nz/ckan.git 2> /dev/null
+git cherry-pick 74f78865b8825c91d1dfe6b189228f4b975610a3 2> /dev/null
+cd -
+
+
+## Modificaciones del production.ini
+
+# Buscamos el site_url
+site_url=$(grep -r ckan.site_url $config_file | sed 's/https\?:\/\///' | awk '{print $(NF)}')
+
+# Agregamos el texto "## ckanext-security" debajo del campo "beaker.session.secret"
+sed -i '/beaker.session.secret/{N;a ## ckanext-security
+}' $config_file
+
+# Agregamos configuraciones para el plugin
+sed -i "/## ckanext-security/{
+a beaker.session.cookie_domain = $site_url
+a beaker.session.cookie_expires = true
+a beaker.session.data_serializer = json
+a beaker.session.httponly = true
+a beaker.session.save_accessed_time = true
+a beaker.session.secure = true
+a beaker.session.timeout = 3600
+a beaker.session.type = redis
+a beaker.session.url = redis:6379
+a ckanext.security.domain = $site_url
+a ckanext.security.lock_timeout = 900
+a ckanext.security.login_max_count = 10
+a ckanext.security.redis.db = 1
+a ckanext.security.redis.host = redis
+a ckanext.security.redis.port = 6379
+a
+}" $config_file
+
+# Añadimos el plugin a la lista
+sed -i '/ckan.plugins[[:space:]]*=/s/googleanalytics/security googleanalytics/' $config_file
+
+# Cambiamos el valor de "beaker.session.key"
+sed -i -r 's/(beaker.session.key[[:space:]]*=).*/\1 ckan_session/' $config_file
+
+# Especificamos el uso de un who.ini diseñado para el plugin
+sed -i '/who.config_file/s/who.ini/who_security.ini/' $config_file

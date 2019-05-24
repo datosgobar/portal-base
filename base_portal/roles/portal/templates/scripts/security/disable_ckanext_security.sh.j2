@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+config_file="/etc/ckan/default/production.ini";
+
+if ! grep '## ckanext-security' $config_file ; then
+    exit 0
+fi
+
+cd /usr/lib/ckan/default/src/ckan
+git reset ckan/config/middleware/pylons_app.py
+git checkout ckan/config/middleware/pylons_app.py
+
+
+## Modificaciones del production.ini
+
+# Buscamos el site_url
+site_url=$(grep -r ckan.site_url $config_file | sed 's/https\?:\/\///' | awk '{print $(NF)}')
+
+# Borramos configuraciones del plugin
+sed -i '/^## ckanext-security/,/^ckanext.security.redis.port/d' /etc/ckan/default/production.ini
+
+# Removemos el plugin de la lista
+sed -i '/ckan.plugins[[:space:]]*=/s/security googleanalytics/googleanalytics/' $config_file
+
+# Especificamos el uso del who.ini
+sed -i '/who.config_file/s/who_security.ini/who.ini/' $config_file
