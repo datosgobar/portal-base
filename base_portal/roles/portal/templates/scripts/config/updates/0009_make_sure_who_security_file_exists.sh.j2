@@ -4,11 +4,5 @@ file_path="/etc/ckan/default/who_security.ini"
 
 if [ ! -f $file_path ]; then
     template_path="/app/roles/portal/templates/scripts/security/who_security.ini.j2"
-    if [ -f $template_path ]; then
-        mv $template_path $file_path
-    else
-        cd /etc/ckan/default
-        wget -O who_security.ini https://raw.githubusercontent.com/datosgobar/portal-base/master/base_portal/roles/portal/templates/scripts/security/who_security.ini.j2
-        cd -
-    fi
+    mv $template_path $file_path
 fi
