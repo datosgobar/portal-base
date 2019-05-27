@@ -4,5 +4,5 @@ file_path="/etc/ckan/default/who_security.ini"
 
 if [ ! -f $file_path ]; then
     template_path="/app/roles/portal/templates/scripts/security/who_security.ini.j2"
-    mv $template_path $file_path
+    cp $template_path $file_path
 fi
