@@ -113,6 +113,7 @@
     - 0006_remove_harvest_and_datajson_plugins.sh
     - 0007_specify_licenses_json_path.sh
     - 0008_specify_units_json_path.sh
+    - 0009_make_sure_who_security_file_exists.sh
 
 - name: Add tests scripts
   template:
