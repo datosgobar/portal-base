@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 config_file="/etc/ckan/default/production.ini";
 
-if grep '## ckanext-xloader' $config_file ; then
+if ! grep '## ckanext-xloader' $config_file ; then
 
     . /usr/lib/ckan/default/bin/activate
     pip install ckanext-xloader
