@@ -54,8 +54,9 @@ if [[ -z $(grep "ckan.plugins" /etc/ckan/default/production.ini | grep xloader) 
     # Detenemos el worker de Datapusher
     sudo a2dissite datapusher
 
-    apachectl restart
-
 fi
+
+apachectl restart
+sudo service supervisor restart
 
 echo "Parte 2 de 2 finalizada"
