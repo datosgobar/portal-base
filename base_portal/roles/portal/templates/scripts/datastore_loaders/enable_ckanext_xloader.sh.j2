@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+config_file="/etc/ckan/default/production.ini";
+
+datastore_user=$1
+datastore_pass=$2
+
+if ! grep '## ckanext-xloader' $config_file ; then
+
+    if [ -z $datastore_user ] || [ -z $datastore_pass ] ; then
+        echo "No se especificó usuario y contraseña de Datastore";
+        exit 1;
+    fi
+
+    . /usr/lib/ckan/default/bin/activate
+    pip install ckanext-xloader
+    pip install messytables
+    pip install -U requests[security]
+    curl https://raw.githubusercontent.com/ckan/ckanext-xloader/master/full_text_function.sql >> /tmp/full_text_function.sql
+    sudo PGPASSWORD=$datastore_pass psql -U $datastore_user -h db -c "CREATE ROLE ckan_default;" || true
+    sudo PGPASSWORD=$datastore_pass psql -h db -U $datastore_user datastore_default -f full_text_function.sql
+    sudo PGPASSWORD=$datastore_pass createdb -h db -U $datastore_user -O ckan_default xloader_jobs -E utf-8 || true
+
+
+    ## Modificaciones del production.ini
+
+    # Buscamos el site_url
+    site_url=$(grep -r ckan.site_url $config_file | sed 's/https\?:\/\///' | awk '{print $(NF)}')
+
+    # Agregamos el texto "## ckanext-xloader" debajo del campo "ckan.datastore.read_url"
+    sed -i '/ckan.datastore.read_url/{N;a ## ckanext-xloader
+    }' $config_file
+
+    # Agregamos configuraciones para el plugin
+    sed -i "/## ckanext-xloader/{
+    a ckanext.xloader.jobs_db.uri = postgresql://$datastore_user:$datastore_pass@db:5432/xloader_jobs
+    a ckanext.xloader.max_content_length = 1000000000
+    a ckanext.xloader.job_timeout = 3600
+    a ckanext.xloader.formats = csv xls xlsx tsv application/csv application/vnd.ms-excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+    a ckanext.xloader.ignore_hash = False
+    a ckanext.xloader.max_excerpt_lines = 100
+    a
+    }" $config_file
+
+fi
+
+echo "Parte 1 de 2 finalizada"
+
+if [[ -z $(grep "ckan.plugins" /etc/ckan/default/production.ini | grep xloader) ]] ; then
+
+    # Añadimos el plugin a la lista y sacamos datapusher
+    sed -i '/ckan.plugins[[:space:]]*=/s/googleanalytics/xloader googleanalytics/' $config_file
+    sed -i '/ckan.plugins[[:space:]]*=/s/datapusher//' $config_file
+
+    # Detenemos el worker de Datapusher
+    sudo a2dissite datapusher
+
+    apachectl restart
+
+fi
+
+echo "Parte 2 de 2 finalizada"
