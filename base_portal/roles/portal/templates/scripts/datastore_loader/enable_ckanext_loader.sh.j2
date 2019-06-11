@@ -1,16 +1,24 @@
 #!/usr/bin/env bash
 config_file="/etc/ckan/default/production.ini";
 
+datastore_user=$1
+datastore_pass=$2
+
 if ! grep '## ckanext-xloader' $config_file ; then
+
+    if [ -z $datastore_user ] || [ -z $datastore_pass ] ; then
+        echo "No se especificó usuario y contraseña de Datastore";
+        exit 1;
+    fi
 
     . /usr/lib/ckan/default/bin/activate
     pip install ckanext-xloader
     pip install messytables
     pip install -U requests[security]
     curl https://raw.githubusercontent.com/ckan/ckanext-xloader/master/full_text_function.sql >> /tmp/full_text_function.sql
-    psql -U my_database_user ckan -h db -c "CREATE ROLE ckan_default;"
-    sudo PGPASSWORD=my_database_pass psql -h db -U my_database_user datastore_default -f full_text_function.sql
-    createdb -h db -U my_database_user -O ckan_default xloader_jobs -E utf-8
+    sudo PGPASSWORD=$datastore_pass psql -U $datastore_user -h db -c "CREATE ROLE ckan_default;" || true
+    sudo PGPASSWORD=$datastore_pass psql -h db -U $datastore_user datastore_default -f full_text_function.sql
+    sudo PGPASSWORD=$datastore_pass createdb -h db -U $datastore_user -O ckan_default xloader_jobs -E utf-8 || true
 
 
     ## Modificaciones del production.ini
@@ -24,7 +32,7 @@ if ! grep '## ckanext-xloader' $config_file ; then
 
     # Agregamos configuraciones para el plugin
     sed -i "/## ckanext-xloader/{
-    a ckanext.xloader.jobs_db.uri = postgresql://my_database_user:my_database_pass@db:5432/xloader_jobs
+    a ckanext.xloader.jobs_db.uri = postgresql://$datastore_user:$datastore_pass@db:5432/xloader_jobs
     a ckanext.xloader.max_content_length = 1000000000
     a ckanext.xloader.job_timeout = 3600
     a ckanext.xloader.formats = csv xls xlsx tsv application/csv application/vnd.ms-excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
@@ -34,6 +42,8 @@ if ! grep '## ckanext-xloader' $config_file ; then
     }" $config_file
 
 fi
+
+echo "Parte 1 de 2 finalizada"
 
 if [[ -z $(grep "ckan.plugins" /etc/ckan/default/production.ini | grep xloader) ]] ; then
 
@@ -47,3 +57,5 @@ if [[ -z $(grep "ckan.plugins" /etc/ckan/default/production.ini | grep xloader) 
     apachectl restart
 
 fi
+
+echo "Parte 2 de 2 finalizada"
