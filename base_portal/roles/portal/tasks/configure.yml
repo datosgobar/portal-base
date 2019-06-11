@@ -100,6 +100,14 @@
     - {src: enable_ckanext_security.sh.j2, dest: enable_ckanext_security.sh}
     - {src: disable_ckanext_security.sh.j2, dest: disable_ckanext_security.sh}
 
+- name: Add xloader and Datapusher scripts
+  template:
+    src: "scripts/datastore_loaders/{{ item.src }}"
+    dest: "{{ DATASTORE_LOADERS_DIR }}/{{ item.dest }}"
+  with_items:
+    - {src: enable_ckanext_xloader.sh.j2, dest: enable_ckanext_xloader.sh}
+    - {src: enable_datapusher.sh.j2, dest: enable_datapusher.sh}
+
 - name: Add update scripts
   template:
     src: "scripts/config/updates/{{ item }}.j2"

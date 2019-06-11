@@ -10,6 +10,7 @@ DATAPUSHER_HOME: /usr/lib/ckan/datapusher
 CKAN_CONFIG: /etc/ckan/default
 CKAN_HARVEST_GCF: /var/log/ckan/std
 SECURITY_DIR: "{{ CKAN_INIT }}/security/"
+DATASTORE_LOADERS_DIR: "{{ CKAN_INIT }}/datastore_loaders/"
 UPDATE_DIR: "{{ CKAN_INIT }}/updates/"
 
 DEFAULT_CKAN_DATA: /var/lib/ckan

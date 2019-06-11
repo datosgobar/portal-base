@@ -15,6 +15,7 @@
     - "{{ DEFAULT_CKAN_DATA }}"
     - "{{ CKAN_INIT }}"
     - "{{ SECURITY_DIR }}"
+    - "{{ DATASTORE_LOADERS_DIR }}"
     - "{{ UPDATE_DIR }}"
 
 - name: Setup ckan_init.d subdirectories
