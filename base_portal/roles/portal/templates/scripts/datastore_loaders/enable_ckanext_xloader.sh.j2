@@ -12,9 +12,6 @@ if ! grep '## ckanext-xloader' $config_file ; then
     fi
 
     . /usr/lib/ckan/default/bin/activate
-    pip install ckanext-xloader
-    pip install messytables
-    pip install -U requests[security]
     curl https://raw.githubusercontent.com/ckan/ckanext-xloader/master/full_text_function.sql >> /tmp/full_text_function.sql
     sudo PGPASSWORD=my_database_pass psql -h db -U my_database_user ckan -c "CREATE ROLE ckan_default;" || true
     sudo PGPASSWORD=$datastore_pass psql -h db -U $datastore_user datastore_default -f /tmp/full_text_function.sql
