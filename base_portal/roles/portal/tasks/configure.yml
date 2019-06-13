@@ -122,6 +122,7 @@
     - 0007_specify_licenses_json_path.sh
     - 0008_specify_units_json_path.sh
     - 0009_make_sure_who_security_file_exists.sh
+    - 0010_update_comment_in_datastore_cronjob.sh
 
 - name: Add tests scripts
   template:
