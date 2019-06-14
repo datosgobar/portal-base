@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+crontab -u www-data -l | sed 's/# datapusher - submit_all/# datastore - submit_all/g' | crontab -u www-data -
