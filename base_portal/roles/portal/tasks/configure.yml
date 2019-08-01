@@ -22,10 +22,17 @@
     src: ckan/production.ini.j2
     dest: "{{ CKAN_CONFIG }}/{{ CKAN_CONFIG_FILE }}"
 
-- name: Add security configuration file
+- name: Add security configuration files
+  vars:
+      user_name: !unsafe '{{ user_name }}'
+      site_url: !unsafe '{{ site_url }}'
+      site_title: !unsafe '{{ site_title }}'
   template:
-    src: scripts/security/who_security.ini.j2
-    dest: "{{ CKAN_CONFIG }}/who_security.ini"
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - {src: scripts/security/who_security.ini.j2, dest: "{{ CKAN_CONFIG }}/who_security.ini"}
+    - {src: scripts/security/lockout_mail.txt.j2, dest: "{{ SECURITY_DIR }}/new_lockout_mail.txt"}
 
 - name: Add licenses JSON file
   template:
