@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
 config_file="/etc/ckan/default/production.ini";
 
-datastore_user=$1
-datastore_pass=$2
+database_user=$1
+database_pass=$2
 
 if ! grep '## ckanext-xloader' $config_file ; then
 
-    if [ -z $datastore_user ] || [ -z $datastore_pass ] ; then
-        echo "No se especificó usuario y contraseña de Datastore";
+    if [ -z $database_user ] || [ -z $database_pass ] ; then
+        echo "No se especificó usuario y contraseña de la base de datos";
         exit 1;
     fi
 
     . /usr/lib/ckan/default/bin/activate
     curl https://raw.githubusercontent.com/ckan/ckanext-xloader/master/full_text_function.sql >> /tmp/full_text_function.sql
     sudo PGPASSWORD=my_database_pass psql -h db -U my_database_user ckan -c "CREATE ROLE ckan_default;" || true
-    sudo PGPASSWORD=$datastore_pass psql -h db -U $datastore_user datastore_default -f /tmp/full_text_function.sql
-    sudo PGPASSWORD=$datastore_pass createdb -h db -U $datastore_user -O ckan_default xloader_jobs -E utf-8 || true
+    sudo PGPASSWORD=$database_pass psql -h db -U $database_user datastore_default -f /tmp/full_text_function.sql
+    sudo PGPASSWORD=$database_pass createdb -h db -U $database_user -O ckan_default xloader_jobs -E utf-8 || true
 
 
     ## Modificaciones del production.ini
@@ -29,7 +29,7 @@ if ! grep '## ckanext-xloader' $config_file ; then
 
     # Agregamos configuraciones para el plugin
     sed -i "/## ckanext-xloader/{
-    a ckanext.xloader.jobs_db.uri = postgresql://$datastore_user:$datastore_pass@db:5432/xloader_jobs
+    a ckanext.xloader.jobs_db.uri = postgresql://$database_user:$database_pass@db:5432/xloader_jobs
     a ckanext.xloader.max_content_length = 1000000000
     a ckanext.xloader.job_timeout = 3600
     a ckanext.xloader.formats = csv xls xlsx tsv application/csv application/vnd.ms-excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
