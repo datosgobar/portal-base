@@ -50,3 +50,6 @@ sed -i -r 's/(beaker.session.key[[:space:]]*=).*/\1 ckan_session/' $config_file
 
 # Especificamos el uso de un who.ini diseñado para el plugin
 sed -i '/who.config_file/s/who.ini/who_security.ini/' $config_file
+
+# Reemplazamos el template para los mails de lockeo de cuentas
+cp /etc/ckan_init.d/security/new_lockout_mail.txt /usr/lib/ckan/default/src/ckanext-security/ckanext/security/templates/security/emails/lockout_mail.txt
