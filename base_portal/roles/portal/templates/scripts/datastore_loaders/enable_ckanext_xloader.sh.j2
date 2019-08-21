@@ -13,7 +13,7 @@ if ! grep '## ckanext-xloader' $config_file ; then
 
     . /usr/lib/ckan/default/bin/activate
     curl https://raw.githubusercontent.com/ckan/ckanext-xloader/master/full_text_function.sql >> /tmp/full_text_function.sql
-    sudo PGPASSWORD=my_database_pass psql -h db -U my_database_user ckan -c "CREATE ROLE ckan_default;" || true
+    sudo PGPASSWORD=$database_pass psql -h db -U $database_user ckan -c "CREATE ROLE ckan_default;" || true
     sudo PGPASSWORD=$database_pass psql -h db -U $database_user datastore_default -f /tmp/full_text_function.sql
     sudo PGPASSWORD=$database_pass createdb -h db -U $database_user -O ckan_default xloader_jobs -E utf-8 || true
 
