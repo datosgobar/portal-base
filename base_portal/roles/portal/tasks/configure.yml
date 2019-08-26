@@ -33,6 +33,7 @@
   with_items:
     - {src: scripts/security/who_security.ini.j2, dest: "{{ CKAN_CONFIG }}/who_security.ini"}
     - {src: scripts/security/lockout_mail.txt.j2, dest: "{{ SECURITY_DIR }}/new_lockout_mail.txt"}
+    - {src: scripts/security/lockout_subject.txt.j2, dest: "{{ SECURITY_DIR }}/new_lockout_subject.txt"}
 
 - name: Add licenses JSON file
   template:
