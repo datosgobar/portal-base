@@ -163,11 +163,6 @@ ckan.max_resource_size = 300
 ckan.datapusher.formats = csv xls xlsx tsv application/csv application/vnd.ms-excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
 ckan.datapusher.url = http://{{ DEFAULT_SERVER_IP }}:8800
 
-## DCAT settings
-
-# Evitamos que dcat traduzca campos de datasets y recursos
-ckanext.dcat.translate_keys = false  
-
 # Resource Proxy settings
 # Preview size limit, default: 1MB
 #ckan.resource_proxy.max_file_size = 1048576
@@ -205,6 +200,11 @@ ckan.harvest.mq.redis_db = {{ DEFAULT_REDIS_DB }}
 googleanalytics.id = UA-101681828-1
 googleanalytics_resource_prefix = /downloads/
 googleanalytics.domain = auto
+
+## DCAT settings
+
+# Evitamos que dcat traduzca campos de datasets y recursos
+ckanext.dcat.translate_keys = false  
 
 ## Logging configuration
 [loggers]
