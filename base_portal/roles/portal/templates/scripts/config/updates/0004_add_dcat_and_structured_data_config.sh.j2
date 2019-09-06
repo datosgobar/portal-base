@@ -11,3 +11,15 @@ fi
 if ! grep '^ckan\.plugins.* structured_data .*$' $config_file ; then
     sed -i 's/ dcat / dcat structured_data /' $config_file
 fi
+
+# Agrego sección para la configuración de dcat
+if ! grep '^## DCAT settings*$' $config_file ; then
+    sed -i "/^googleanalytics\.domain/{
+        a
+        a ## DCAT settings
+        a
+        a # Evitamos que dcat traduzca campos de datasets y recursos
+        a ckanext.dcat.translate_keys = false
+        a
+    }" $config_file
+fi
