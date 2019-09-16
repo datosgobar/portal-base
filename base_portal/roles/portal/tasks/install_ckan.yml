@@ -27,6 +27,10 @@
     - run
     - config
 
+- name: Install ckan
+  apt:
+    deb: /tmp/python-ckan_2.7-trusty_amd64.deb
+
 - name: Create virtualenv
   pip:
     name: pip
@@ -39,10 +43,6 @@
     src: "{{ CKAN_HOME }}/src/ckan/who.ini"
     dest: "{{ CKAN_CONFIG }}/who.ini"
 
-
-- name: Install ckan
-  apt:
-    deb: /tmp/python-ckan_2.7-trusty_amd64.deb
 
 - name: Upgrade pip
   pip:

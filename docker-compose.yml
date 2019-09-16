@@ -9,7 +9,7 @@ services:
         - portal
     portal:
         build: ./base_portal/
-        image: datosgobar/portal-base:latest
+        image: datosgobar/portal-base:prueba-ubuntu-18
         ports:
           - 8800:8800
         depends_on:
