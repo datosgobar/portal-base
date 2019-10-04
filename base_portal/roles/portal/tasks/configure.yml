@@ -7,9 +7,10 @@
     dest: /etc/apache2/sites-enabled/ckan_default.conf
 
 - name: Configure apache Datapusher
-  template:
-    src: apache/datapusher.conf.j2
-    dest: /etc/apache2/sites-enabled/datapusher.conf
+  file:
+    src: "/etc/apache2/sites-available/datapusher.conf"
+    dest: "/etc/apache2/sites-enabled/datapusher.conf"
+    state: link
 
 - name: Configure apache
   lineinfile:
