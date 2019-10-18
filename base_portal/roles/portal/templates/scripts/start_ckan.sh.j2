@@ -4,7 +4,6 @@ set -e;
 # Considerando que CKAN/data va a ser un volumen externo, corrijo permisos
 chown www-data:www-data {{ DEFAULT_CKAN_DATA }} {{ CKAN_DIST_MEDIA }} {{ CKAN_DIST_CONFIG }}
 chmod u+rwx {{ DEFAULT_CKAN_DATA }} {{ CKAN_DIST_MEDIA }} {{ CKAN_DIST_CONFIG }}
-export GOBAR_CONFIG=$(cat /var/lib/ckan/theme_config/settings.json)
 
 APACHE_PID=/var/run/apache2/apache2.pid
 printf  "Borrar si existe: apache2.pid ($APACHE_PID):....."
