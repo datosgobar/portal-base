@@ -13,7 +13,8 @@ if [[ -z $(grep "ckan.plugins" /etc/ckan/default/production.ini | grep datapushe
     # Reemplazamos el comando a utilizar para subir los recursos al Datastore
     crontab -u www-data -l | sed '/# datastore - submit_all/s/--plugin=ckanext-xloader xloader submit all/--plugin=ckan datapusher submit_all/' | crontab -u www-data -
 
-    # Restart de apache
+    # Restart de apache y supervisor
     apachectl restart
+    supervisorctl restart all
 
 fi
