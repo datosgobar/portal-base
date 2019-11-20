@@ -22,6 +22,7 @@ COPY ./site.yml /app/
 COPY ./roles /app/roles
 COPY ./group_vars /app/group_vars
 RUN  ansible-playbook -i "localhost," -c local site.yml -vv
+RUN sed -i "2i MAX_CONTENT_LENGTH = 314572800" /etc/ckan/datapusher_settings.py
 
 CMD ["/etc/ckan_init.d/start_ckan.sh"]
 
