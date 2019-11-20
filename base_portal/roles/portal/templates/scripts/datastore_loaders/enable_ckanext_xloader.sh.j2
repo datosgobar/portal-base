@@ -30,7 +30,7 @@ if ! grep '## ckanext-xloader' $config_file ; then
     # Agregamos configuraciones para el plugin
     sed -i "/## ckanext-xloader/{
     a ckanext.xloader.jobs_db.uri = postgresql://$database_user:$database_pass@db:5432/xloader_jobs
-    a ckanext.xloader.max_content_length = 1000000000
+    a ckanext.xloader.max_content_length = 300000000
     a ckanext.xloader.job_timeout = 3600
     a ckanext.xloader.formats = csv xls xlsx tsv application/csv application/vnd.ms-excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
     a ckanext.xloader.ignore_hash = False
