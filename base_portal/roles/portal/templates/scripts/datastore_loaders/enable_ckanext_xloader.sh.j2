@@ -46,7 +46,7 @@ if [[ -z $(grep "ckan.plugins" /etc/ckan/default/production.ini | grep xloader) 
 
     # Añadimos el plugin a la lista y sacamos datapusher
     sed -i '/ckan.plugins[[:space:]]*=/s/googleanalytics/xloader googleanalytics/' $config_file
-    sed -i '/ckan.plugins[[:space:]]*=/s/datapusher//' $config_file
+    sed -i '/ckan.plugins[[:space:]]*=/s/ datapusher / /' $config_file
 
     # Detenemos el worker de Datapusher
     sudo a2dissite datapusher
